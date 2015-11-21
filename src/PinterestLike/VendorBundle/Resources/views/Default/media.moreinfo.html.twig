@@ -1,0 +1,244 @@
+{% extends app.request.query.get("popup") == 1 ?
+    'base_popup.html.twig' : 'base.html.twig' %}
+
+{% block body %}
+    <div class="row row-more-info">
+        <div class="col-sm-3 col-xs-12">
+            <div class="col-md-12" id="vendor-details">
+                <ul class="list-group form-horizontal no-border-radius">
+                  <li class="list-group-item no-border-radius">{{ vendor.getName }}</li>
+                  <li class="list-group-item">
+                      <div class="form-group">
+                        <div class="col-xs-2">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-xs-10">{{ vendor.getContactPerson }}</div>
+                      </div>
+                  </li>
+                  {% if vendor.getPhone %}
+                    <li class="list-group-item">
+                        <div class="form-group">
+                          <div class="col-xs-2">
+                          <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                          </div>
+                          <div class="col-xs-10">{{ vendor.getPhone }}</div>
+                        </div>
+                    </li>
+                  {% endif %}
+                  {% if vendor.getMobile %}
+                    <li class="list-group-item">
+                        <div class="form-group">
+                          <div class="col-xs-2">
+                          <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                          </div>
+                          <div class="col-xs-10">{{ vendor.getMobile }}</div>
+                        </div>
+                    </li>
+                  {% endif %}
+                  <li class="list-group-item">
+                      <div class="form-group">
+                        <div class="col-xs-2">
+                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-xs-10">
+                            {{ vendor.getAddress }}<br>
+                            {% if vendor.getPostcode %}
+                                {{ vendor.getPostcode }}<br>
+                            {% endif %}
+                            {{ vendor.getCountry }}</div>
+                      </div>
+                  </li>
+                  {#
+                  <li class="list-group-item">
+                      <div class="form-group">
+                        <div class="col-xs-2">
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-xs-10">
+                            Mon 9:00am - 9:00pm<br>
+                            Tue 9:00am - 9:00pm<br>
+                            Wed 9:00am - 9:00pm<br>
+                            Thu 9:00am - 9:00pm<br>
+                            Fri 9:00am - 9:00pm<br>
+                            Sat 9:00am - 9:00pm<br>
+                            Sun 9:00am - 9:00pm
+                        </div>
+                      </div>
+                  </li>
+                  #}
+                  <li class="list-group-item">
+                      <div class="form-group">
+                        <div class="col-xs-2">
+                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-xs-10">
+                            {{ vendor.getWebsite }}
+                        </div>
+                      </div>
+                  </li>
+                  <li class="list-group-item">
+                      <div class="form-group">
+                        <div class="col-xs-2"></div>
+                        <div class="col-xs-10">
+                            <a class="btn btn-xs btn-info" href="{{ path('vendor_profile', {'vendor': vendor.Id }) }}" role="button">VIEW FULL PROFILE</a>
+                        </div>
+                      </div>
+                  </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xs-12 margin-top35">
+            <div class="col-md-12">
+                <div class="theme-colour-bg padding-15"  data-media-type='{{ type }}' data-media-id='{{ entity.getId }}'>
+                    <a href="" class="btn btn-xs btn-default pink-text not-link add-to-album"><span class="glyphicon glyphicon-plus"></span></a>
+                    <a href="" class="btn btn-xs btn-default pop pink-text not-link">SHARE</a>
+                    <div class="popover-content hide">
+                        <ul class="list-unstyled" data-url="{{ app.request.uri | replace({'?popup=1' : ''}) }}">
+                            <li>
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=" class="js-social-share"><span class="el el-facebook el-lg theme-colour"></span>&nbsp; Facebook</a>
+                            </li>
+                            <li>
+                                <a href="https://plus.google.com/share?url=" class="js-social-share"><span class="el el-googleplus el-lg theme-colour"></span>&nbsp; Google +</a>
+                            </li>
+                            <li>
+                                <a href="http://www.tumblr.com/share/link?url=" class="js-social-share"><span class="el el-tumblr el-lg theme-colour"></span>&nbsp; Tumblr</a>
+                            </li>
+                            {#
+                            <li>
+                                <a href="email" class="js-social-share"><span class="el el-envelope el-lg theme-colour"></span>&nbsp; Email</a>
+                            </li>
+                            #}
+                        </ul>
+                    </div>
+                    <span class="pull-right white-text">
+                        {% if entity.getCategory %}
+                            {{ entity.getCategory.getName }}
+                        {% endif %}
+                    </span>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="padding-15 list-group-item">
+                    {% if type == 'image' %}
+                        <img class="img-responsive" src="/images/vendor_images/{{ entity.getImagePath }}" width="100%" />
+                    {% else %}
+                        <img class="img-responsive" src="/images/vendor_videos/{{ entity.getImagePath }}" width="100%" onclick="javascript: runVideo('{{ entity.getVideoType }}', this, '{{ entity.getVideoId }}');" />
+                        <img class="player" src="/bundles/PinterestLikestatic/images/play-button-red.png" onclick="javascript: runVideo('{{ entity.getVideoType }}', this, '{{ entity.getVideoId }}');">
+                    {% endif %}
+                </div>
+                <div class="padding-15 list-group-item">
+                    <caption>{{ entity.getDescription }}</caption>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 col-xs-12 margin-top35 vendor-panel">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <div class="col-md-12 padding-10">
+                    <form>
+                        <p class="text-center">
+                            ASK VENDOR A QUESTION
+                        </p>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5"></textarea>
+                        </div>
+                        <div class="line">
+                            <button type="button" id="ask-question" class="btn btn-info btn-xs pull-right">SEND</button>
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+
+            {% if vendor.getImages.count > 0 %}
+                <div class="col-md-12 padding-10 vendor-others">
+                    <p class="text-center">
+                        More Images
+                    </p>
+                    <div>
+                        {% for image in vendor.getImages %}
+                            <img src="{{ ('/images/vendor_images/' ~ image.getImagePath)  | imagine_filter('my_thumb')}}" class="img-thumbnail col-sm-4" alt="" onclick="javascript: openPopup('image', this, '{{ image.getId }}');" title="">
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if vendor.getVideos.count > 0 %}
+                <div class="col-md-12 padding-10 vendor-others">
+                    <p class="text-center">
+                        More Videos
+                    </p>
+                    <div>
+                        {% for video in vendor.getVideos %}
+                            <img src="{{ ('/images/vendor_videos/' ~ video.getImagePath)  | imagine_filter('my_thumb')}}" class="img-thumbnail col-sm-4" alt="" onclick="javascript: openPopup('video', this, '{{ video.getId }}');" title="">
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(function() {
+            $('.not-link').on('click', function() {
+                return false;
+            });
+
+            $('.add-to-album').click(function(e) {
+                e.preventDefault();
+                var $parent = $(this).parent();
+                openSavePopup($parent.data('media-type'), this, $parent.data('media-id'));
+            });
+
+            $('#ask-question').click(function() {
+                var $form = $(this).closest('form');
+                if ($form.find('textarea').val().length > 0) {
+                    $('#ask-question').html('Sending...').attr('disabled', 'disabled');
+
+                    $.ajax({
+                        method: "POST",
+                        url: "{{ path('vendor_question', { vendor: vendor.id }) }}",
+                        data: { question: $form.find('textarea').val() }
+                    }).done(function(data) {
+                        $form.find('textarea').parent().html('<div class="alert alert-success" role="alert">You have succesfully asked a question to this vendor.</div>');
+                        $('#ask-question').html('Sent').attr('disabled', '');;
+                    });
+                }
+            });
+
+            $('.pop').popover({
+                html: true,
+                content: function () {
+                    return $(this).parent().find('.popover-content').html();
+                },
+                placement : 'bottom',
+                trigger: 'manual',
+                animation: true
+            }).on("mouseenter", function () {
+                var _this = this;
+                $(this).popover("show");
+
+                $('a.js-social-share').click(function(e) {
+                    e.preventDefault();
+                    var pageUrl = encodeURIComponent($('a.js-social-share').closest('ul').data('url'));
+                    windowPopup(this.href + pageUrl, 500, 300);
+                });
+
+                $(".popover").on("mouseleave", function () {
+                    $(_this).popover('hide');
+                });
+            }).on("mouseleave", function () {
+                var _this = this;
+                setTimeout(function () {
+                    if (!$(".popover:hover").length) {
+                        $(_this).popover("hide");
+                    }
+                }, 300);
+            });
+        });
+    </script>
+{% endblock javascriptsBottom %}

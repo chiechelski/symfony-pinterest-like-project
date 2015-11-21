@@ -1,0 +1,360 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center head-color">
+                <h1>MY DASHBOARD</h1>
+                <hr>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-12">
+            <div class="col-sm-12 col-md-12">
+                <a class="btn btn-default theme-colour-bg pull-right text-uppercase white-text" href="#" role="button">
+                <span class="glyphicon glyphicon-print theme-colour white-text"></span>&nbsp; Print This Page
+                </a>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 top20">
+            <div class="col-sm-6 col-md-6 offset-1">
+                <div class="col-sm-12 col-md-12 white-bg padding-15">
+                    <div class="col-md-12">
+                        <p>How your profile is currently ranked amongst all vendors.</p>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <span class="theme-colour">TOP 5%</span>
+                    </div>
+                    <div class="col-md-9 col-sm-9">
+                        <div class="progress">
+                            <div class="progress-bar theme-colour-bg" role="progressbar" style="width: 80%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6 sm-top10">
+                <div class="col-md-12 white-bg padding-15">
+                    <div class="col-md-2">
+                        <img src="{{ asset('/bundles/PinterestLikestatic/images/dashboard/icon-steps.jpg') }}" class="img-responsive" alt="Steps">
+                    </div>
+                    <div class="col-md-10">
+                        <p>Well done! Your profile rank has improved by 17% in the past 30 days.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 top20">
+            <div class="col-md-4">
+                <div class="white-bg">
+                    <img src="{{ asset('/bundles/PinterestLikestatic/images/dashboard/icon-image-views-80x80.jpg') }}" class="img-responsive pull-left" alt="Views">
+                    <div class="padding-right10 pull-right text-right">
+                        <span class="theme-colour font-30">
+                        1,000,000
+                        </span>
+                        <p class="margin-0">Total Image Views</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="col-md-4 sm-top10 md-top10">
+                <div class="white-bg">
+                    <img src="{{ asset('/bundles/PinterestLikestatic/images/dashboard/icon-profile-views-80x80.jpg') }}" class="img-responsive pull-left" alt="Views">
+                    <div class="padding-right10 pull-right text-right">
+                        <span class="theme-colour font-30">
+                        1,000
+                        </span>
+                        <p class="margin-0">Total Profile Views</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="col-md-4 sm-top10 md-top10">
+                <div class="white-bg">
+                    <img src="{{ asset('/bundles/PinterestLikestatic/images/dashboard/icon-enquiries-received-80x80.jpg') }}" class="img-responsive pull-left" alt="Views">
+                    <div class="padding-right10 pull-right text-right">
+                        <span class="theme-colour font-30">
+                        100
+                        </span>
+                        <p class="margin-0">Enquiries Received</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 top20">
+            <div class="col-sm-12 col-md-12">
+                <div class="chart-holder white-bg padding-15">
+                    <div class="col-sm-3 col-md-3">
+                        <span class="font-25">Profile Activity</span>
+                    </div>
+                    <div class="col-sm-5 col-md-5">
+                        <ul class="list-inline">
+                            <li><span class="glyphicon glyphicon-record profile-colour"></span>&nbsp;Profile Views</li>
+                            <li><span class="glyphicon glyphicon-record enquiries-colour"></span>&nbsp;Enquiries</li>
+                            <li><span class="glyphicon glyphicon-record clicks-colour"></span>&nbsp;Website Link Clicks</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        <ul class="list-inline pull-right">
+                            <li>
+                                <a class="btn btn-default" href="#" role="button">This Year</a>
+                            </li>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                    View Weekly
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">View Daily</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">View Weekly</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">View Monthly</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">View Yearly</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <canvas id="profile-activity-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 top20">
+            <div class="col-sm-12 col-md-12">
+                <div class="chart-holder white-bg padding-15">
+                    <div class="col-sm-3 col-md-3">
+                        <span class="font-25">Content Activity</span>
+                    </div>
+                    <div class="col-sm-5 col-md-5">
+                        <ul class="list-inline">
+                            <li><span class="glyphicon glyphicon-record profile-colour"></span>&nbsp;Image Views</li>
+                            <li><span class="glyphicon glyphicon-record enquiries-colour"></span>&nbsp;Adds to User Album</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        <ul class="list-inline pull-right">
+                            <li>
+                                <a class="btn btn-default" href="#" role="button">This Year</a>
+                            </li>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                    View Weekly
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">View Daily</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">View Weekly</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">View Monthly</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">View Yearly</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <canvas id="content-activity-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 top20">
+            <div class="col-sm-6 col-md-6 offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading theme-colour-bg">
+                        <h3 class="panel-title white-text">STATISTICS SUMMARY (to date)</h3>
+                    </div>
+                    <!-- List group -->
+                    <ul class="list-group">
+                        <li class="list-group-item clearfix">Total Image Views<span class="pull-right">2,000,000</span></li>
+                        <li class="list-group-item clearfix">Total Clicks on Profile<span class="pull-right">95,000</span></li>
+                        <li class="list-group-item clearfix">Total Images Added to User Album<span class="pull-right">128,000</span></li>
+                        <li class="list-group-item clearfix">Total Images Added to Vendor Manager<span class="pull-right">82,000</span></li>
+                        <li class="list-group-item clearfix">Total Total Images Added to Budget Planner<span class="pull-right">78,000</span></li>
+                        <li class="list-group-item clearfix">Total Enquiries Received<span class="pull-right">120,000</span></li>
+                        <li class="list-group-item clearfix">Images Shared via Email<span class="pull-right">210,000</span></li>
+                        <li class="list-group-item clearfix">Images Shared via Facebook<span class="pull-right">420,000</span></li>
+                        <li class="list-group-item clearfix">Images Shared via Google+<span class="pull-right">35,000</span></li>
+                        <li class="list-group-item clearfix">Images Shared via Tumblr<span class="pull-right">45,000</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading theme-colour-bg">
+                        <h3 class="panel-title white-text">TOP 10 MOST VIEWED IMAGES</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-xs-12 col-sm-6 col-md-6 image-views-block">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                    <img class="media-object" src="{{ asset('/bundles/PinterestLikestatic/images/dashboard/93x93.jpg') }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="media-body media-middle">
+                                    <span class="glyphicon glyphicon-eye-open"></span>&nbsp;1,400,500
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 image-views-block">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                    <img class="media-object" src="{{ asset('/bundles/PinterestLikestatic/images/dashboard/93x93.jpg') }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="media-body media-middle">
+                                    <span class="glyphicon glyphicon-eye-open"></span>&nbsp;1,400,500
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 image-views-block">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                    <img class="media-object" src="{{ asset('/bundles/PinterestLikestatic/images/dashboard/93x93.jpg') }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="media-body media-middle">
+                                    <span class="glyphicon glyphicon-eye-open"></span>&nbsp;1,400,500
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+
+    {{ parent() }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+
+            var profileChartEle = $("#profile-activity-chart");
+            var contentChartEle = $("#content-activity-chart");
+
+            $(window).resize(respondCanvas);
+
+            function respondCanvas(ele, data, options) {
+                var ctx = ele.get(0).getContext("2d");
+                ele.attr('width', $(".chart-holder").width());
+                ele.attr('height', 350);
+                //Call a function to redraw other content (texts, images etc)
+                myChart = new Chart(ctx).Line(data, options);
+            }
+
+            var options = {
+                animation : true,
+                animationEasing: "easeOutQuart",
+
+            };
+
+            var data = {
+                labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                datasets: [
+                    {
+                        label: "Enquiries",
+                        fillColor: "rgba(232,43,145,0.7)",
+                        strokeColor: "rgba(151,187,205,1)",
+                        pointColor: "rgba(151,187,205,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(151,187,205,1)",
+                        data: [28, 48, 40, 19, 86, 27, 90, 66, 34, 70, 37, 90]
+                    },
+                    {
+                        label: "Website Link Clicks",
+                        fillColor: "rgba(242,179,198,0.7)",
+                        strokeColor: "rgba(151,187,205,1)",
+                        pointColor: "rgba(151,187,205,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(151,187,205,1)",
+                        data: [66, 34, 70, 37, 43, 90, 45, 80, 81, 56, 55, 88]
+                    },
+                    {
+                        label: "Profile Views",
+                        fillColor: "rgba(128,219,220,0.7)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#80DBDC",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: [65, 59, 80, 81, 56, 55, 40, 34, 70, 37, 43, 48]
+                    }
+                ]
+            };
+
+            //Initial call
+            respondCanvas(profileChartEle, data, options);
+
+            var data = {
+                labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                datasets: [
+                    {
+                        label: "Adds to User Album",
+                        fillColor: "rgba(232,43,145,0.7)",
+                        strokeColor: "rgba(151,187,205,1)",
+                        pointColor: "rgba(151,187,205,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(151,187,205,1)",
+                        data: [28, 48, 40, 19, 86, 27, 90, 66, 34, 70, 37, 90]
+                    },
+                    {
+                        label: "Image Views",
+                        fillColor: "rgba(128,219,220,0.7)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#80DBDC",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: [65, 59, 80, 81, 56, 55, 40, 34, 70, 37, 43, 48]
+                    }
+                ]
+            };
+
+            respondCanvas(contentChartEle, data, options);
+
+            $('.not-link').on('click', function() {
+                return false;
+            });
+
+            $('.pop').popover({
+                html: true,
+                // title: function () {
+                //     return $(this).parent().find('.head').html();
+                // },
+                content: function () {
+                    return $(this).parent().find('.popover-content').html();
+                },
+                placement : 'bottom',
+                trigger: 'manual',
+                animation: true
+            }).on("mouseenter", function () {
+                var _this = this;
+                $(this).popover("show");
+                $(".popover").on("mouseleave", function () {
+                    $(_this).popover('hide');
+                });
+            }).on("mouseleave", function () {
+                var _this = this;
+                setTimeout(function () {
+                    if (!$(".popover:hover").length) {
+                        $(_this).popover("hide");
+                    }
+                }, 300);
+            });
+        });
+    </script>
+{% endblock javascriptsBottom %}
