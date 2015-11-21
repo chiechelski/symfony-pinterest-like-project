@@ -1,0 +1,32 @@
+{
+    "name": "happyr/google-api-bundle",
+    "type": "symfony-bundle",
+    "description": "A Symfony2 Wrapper for the Google APIs Client Library for PHP",
+    "keywords": ["Google API"],
+    "homepage": "http://developer.happyr.com/symfony2-bundles/google-api-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tobias Nyholm",
+            "email": "tobias@happyr.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": "2.*",
+        "symfony/yaml": "2.*",
+        "google/apiclient": "1.*"
+    },
+    "require-dev": {
+        "mockery/mockery": "*"
+    },
+    "autoload": {
+        "psr-0": { "HappyR\\Google\\ApiBundle": "" }
+    },
+    "target-dir": "HappyR/Google/ApiBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.1.x-dev"
+        }
+    }    
+}

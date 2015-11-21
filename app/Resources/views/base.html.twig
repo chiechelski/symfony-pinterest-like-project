@@ -1,0 +1,181 @@
+{#
+This is a generic HTML5 wrapper that should be suitable for any web page to extend
+#}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9 ie8"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}The wedly{% endblock %}</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="{% block metaDescription %}Pinterest-like{% endblock %}"/>
+        <meta name="keywords" content="{% block metaKeywords %}The wedly{% endblock %}"/>
+        <meta name="viewport" content="initial-scale = 1.0, user-scalable = no">
+        <script type="text/javascript">
+            if (/(iPhone|iPod).*AppleWebKit.*Mobile.*Safari/.test(navigator.userAgent) ) {
+                var headNode = document.getElementsByTagName("head")[0];
+                var sbNode = document.createElement('meta');
+                sbNode.name = 'apple-itunes-app';
+                sbNode.content = 'app-id={#{ site['apple_app_id'] }#}';
+                headNode.appendChild(sbNode);
+            }
+        </script>
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+        {% block stylesheets %}
+            {% stylesheets filter='cssrewrite'
+                'bundles/pinanobootstrap3/css/bootstrap.css'
+                'bundles/pinanobootstrap3/css/bootstrap-theme.css'
+                '@PinterestLikeStaticBundle/Resources/public/css/main.css'
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    {% set site_data = get_site_data() %}
+    <body {% block bodyData %}{% endblock bodyData %} class="{% block bodyClass %}{% endblock bodyClass %}{% if app.user is not empty %} logged-in{% endif %}">
+        {% block bodyStart %}{% endblock bodyStart %}
+        {% block header %}
+            <header class="header">
+                <nav role="navigation" class="navbar">
+
+                </nav>
+
+                <nav role="navigation" class="sub-header">
+                    <div class="container">
+                        <div class="col-md-4 col-sm-4 top-left-links">
+                            <ul class="list-unstyled list-inline">
+                                <li class="search ">
+                                    <form action="/" method="get" role="search">
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" value="{{ searchTerm | default('') }}" name="search-term" class="form-control" placeholder="Search for...">
+                                            <span class="input-group-btn">
+                                                <button id="search-box-btn" class="btn btn-default btn-small" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                            </span>
+                                        </div><!-- /input-group -->
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 icons">
+                            <ul class="list-unstyled list-inline">
+                                <li>
+                                    <a href="/">
+                                        <img id="logo" src="{{ asset('/bundles/PinterestLikestatic/images/logo-black.png') }}" />
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 top-right-links">
+                            <ul class="list-unstyled list-inline">
+                                <li>
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" id="dropdownMenuCategories" data-toggle="dropdown" aria-expanded="true">
+                                            Categories <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-right {% if site_data['categories'] | length > 10  %}row{% endif %}" role="menu" aria-labelledby="dropdownMenuCategories">
+                                            {% for category in site_data['categories'] %}
+                                                <li class="{% if site_data['categories'] | length > 10  %}col-xs-6{% endif %}" role="presentation">
+                                                    <a role="menuitem" tabindex="-1" href="{{ path('filter_category', { id: category.id }) }}">{{ category.name }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </li>
+                                {#
+                                <li>
+                                    <a href="{{ path('about') }}">
+                                        Locations
+                                    </a>
+                                </li>
+                                #}
+                                <li>
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" id="dropdownMenuColours" data-toggle="dropdown" aria-expanded="true">
+                                            Colours <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-right {% if site_data['colours'] | length > 10  %}row{% endif %}" role="menu" aria-labelledby="dropdownMenuColours">
+                                            {% for colour in site_data['colours'] %}
+                                                <li class="{% if site_data['colours'] | length > 10  %}col-xs-6{% endif %}" role="presentation">
+                                                    <a role="menuitem" tabindex="-1" href="{{ path('filter_colour', { id: colour.id }) }}">{{ colour.name }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+            </header>
+        {% endblock header %}
+
+        {# everything between the header and footer #}
+        {% block main %}
+            <div class="main-block">
+                <div class="container">
+                    <div class="col-md-12">
+                        {% block flashMessages %}
+                            {{ include('PinterestLikeStaticBundle:FlashMessages:flashMessages.html.twig') }}
+                        {% endblock flashMessages %}
+
+                        {% block body %}
+                        {% endblock body %}
+                    </div>
+                </div>
+            </div>
+        {% endblock main %}
+
+        {% block footer %}
+            {% if false and not app.session.get('is_api_session') %}
+                <footer>
+                    <div class="container">
+                        <div class="col-md-12">
+                            <p class="text-muted">&copy; The Wedly {{ "now"|date("Y") }}</p>
+                            <nav>
+                                <a class="text-muted" href="{{ path("about") }}">Home</a>
+                                <a class="text-muted" href="{{ path("about") }}">About</a>
+                            </nav>
+                        </div>
+                    </div>
+                </footer>
+            {% endif %}
+
+            <!-- Modal -->
+            <div class="modal fade top-margin-modal" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                </div>
+              </div>
+            </div>
+
+            <div id="youtube-player" style="display: none;">
+                <iframe allowfullscreen="" frameborder="0" height="100%" data-src="https://www.youtube.com/embed/" width="100%" style="position: absolute; top: 0px;"></iframe>
+            </div>
+            <div id="vimeo-player" style="display: none;">
+                <iframe data-src="https://player.vimeo.com/video/video-id?autoplay=1&color=ea4c88&byline=0&portrait=0" width="98%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
+
+        {% endblock footer %}
+
+        {% block javascriptsBottom %}
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+            {% javascripts
+                '@PinanoBootstrap3Bundle/Resources/public/js/bootstrap.js'
+                '@PinterestLikeStaticBundle/Resources/public/js/isotope.pkgd.min.js'
+                '@PinterestLikeStaticBundle/Resources/public/js/imagesloaded.pkgd.min.js'
+                '@PinterestLikeStaticBundle/Resources/public/js/jquery.contenthover.min.js'
+            %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock javascriptsBottom %}
+        {% block bodyEnd %}{% endblock bodyEnd %}
+    </body>
+</html>

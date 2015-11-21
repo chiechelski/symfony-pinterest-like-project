@@ -1,0 +1,8 @@
+services:
+    pinterestlike.twig.side_data_helper:
+         class: PinterestLike\CoreBundle\Twig\SiteDataHelperExtension
+         arguments: [@service_container]
+         tags:
+             - { name: twig.extension }
+
+
