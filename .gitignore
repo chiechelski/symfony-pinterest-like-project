@@ -1,0 +1,11 @@
+/web/bundles/
+/web/images
+/web/documents
+/app/cache/*
+/app/logs/*
+/build/
+/vendor/
+/web/js
+/web/css/*
+/symfony
+/nbproject/private/
