@@ -2,10 +2,25 @@
 
 {% block body %}
 
+    <div class="text-center loading-img">
+        <img src="{{ asset('/bundles/pinterestlikestatic/images/ajax-loader.gif') }}" alt="loading" />
+    </div>
+
+    <br />
+
+    <div class="row" id="cards">
+        {% for media in allMedia %}
+            {% include 'PinterestLikeCoreBundle:Default:media-block.html.twig' with {'size': 5} %}
+        {% endfor %}
+    </div>
+
 {% endblock %}
 
 {% block javascriptsBottom %}
 
     {{ parent() }}
+
+    {# TODO - move to a js file to be cached #}
+    {% include 'PinterestLikeCoreBundle:Default:media-block.js.twig' %}
 
 {% endblock javascriptsBottom %}

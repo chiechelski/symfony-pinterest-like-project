@@ -1,0 +1,54 @@
+<div class="{{ size == 5 ? 'col-md-5ths' : 'col-md-4'  }} col-sm-4 col-xs-6 vendor-media" id="media-item-{{ media['type'] }}-{{ media['id'] }}">
+
+    <div class="contents-block">
+
+        <div class="thumbnails">
+
+            {% if media['type'] == 'image' %}
+                <img class="img-responsive" src="/images/vendor_images/{{ media['image_path'] }}" width="100%" />
+            {% else %}
+                <img class="img-responsive" src="/images/vendor_videos/{{ media['image_path'] }}" width="100%" />
+                <img class="player" src="{{ asset('/bundles/pinterestlikestatic/images/play-button-red.png') }}" />
+            {% endif %}
+
+            <div class='contenthover media-item' data-media-type='{{ media['type'] }}' data-media-id='{{ media['id'] }}'>
+                <div class="text-center">
+                    <a href="" class="btn btn-default btn-xs pink-text not-link pop">SHARE</a>
+
+                    <div class="content hide">
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=" class="js-social-share"><span class="el el-facebook el-lg theme-colour"></span>&nbsp; Facebook</a>
+                            </li>
+                            <li>
+                                <a href="https://plus.google.com/share?url=" class="js-social-share"><span class="el el-googleplus el-lg theme-colour"></span>&nbsp; Google +</a>
+                            </li>
+                            <li>
+                                <a href="http://www.tumblr.com/share/link?url=" class="js-social-share"><span class="el el-tumblr el-lg theme-colour"></span>&nbsp; Tumblr</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="wrapper"></div>
+            </div>
+        </div>
+
+        <div class="vendor-info">
+            <p class="text-center">
+                <a href="#">
+                    {{ media['vendor_name'] }}
+                </a>
+                <br />
+                {% if media['category'] is defined %}
+                    <span class="text-muted">{{ media['category_name'] | capitalize }} </span>
+                {% endif %}
+            </p>
+        </div>
+
+        {% if media['album_desc'] is defined %}
+            <div class="album-desc-info text-muted text-center">
+                {{ media['album_desc'] }}
+            </div>
+        {% endif %}
+    </div>
+</div>

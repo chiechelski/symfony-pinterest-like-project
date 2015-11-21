@@ -1,0 +1,80 @@
+<script type="text/javascript">
+    $(function(){
+
+        $('.media-item .wrapper').click(function() {
+            var $parent = $(this).parent();
+            openPopup($parent.data('media-type'), this, $parent.data('media-id'));
+        });
+
+        function openSavePopup(type, obj, id)
+        {
+            var target = '/user/media/save/' + type  + '/' + id + '?popup=1';
+
+            // load the url and show modal on success
+            $("#modal-vendor-more-info .modal-body").load(target, function() {
+                 $("#modal-vendor-more-info").removeClass('modal-vendor-more-info').addClass('top-margin-modal').modal("show");
+            });
+        }
+
+        window.openSavePopup = openSavePopup;
+
+        $('.media-item .add-to-album').click(function(e) {
+            e.preventDefault();
+            var $parent = $(this).parent().parent();
+            openSavePopup($parent.data('media-type'), this, $parent.data('media-id'));
+        });
+
+        var $cards = $('#cards');
+        var $container = $cards.isotope({
+            itemSelector: '.vendor-media',
+        });
+
+        $container.imagesLoaded( function() {
+            $container.isotope('layout');
+        });
+
+        $container.isotope( 'on', 'layoutComplete',
+            function( laidOutItems ) {
+                $container.isotope('bindResize');
+                $cards.css('visibility', 'visible');
+                $cards.parent().find('.loading-img').remove();
+            }
+        );
+
+        $('.not-link').on('click', function() {
+            return false;
+        });
+
+        /* popover option */
+
+        $('.pop').popover({
+            html: true,
+            content: function () {
+                return $(this).parent().find('.content').html();
+            },
+            placement : 'bottom',
+            trigger: 'manual',
+            animation: true
+        }).on("mouseenter", function () {
+            var _this = this;
+            $(this).popover("show");
+
+            $('a.js-social-share').click(function(e) {
+                e.preventDefault();
+                var pageUrl = encodeURIComponent($('a.js-social-share').closest('ul').data('url'));
+                windowPopup(this.href + pageUrl, 500, 300);
+            });
+
+            $(".popover").on("mouseleave", function () {
+                $(_this).popover('hide');
+            });
+        }).on("mouseleave", function () {
+            var _this = this;
+            setTimeout(function () {
+                if (!$(".popover:hover").length) {
+                    $(_this).popover("hide");
+                }
+            }, 300);
+        });
+    });
+</script>
