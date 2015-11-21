@@ -1,0 +1,226 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center head-color">
+                <h1>MY VENDORS</h1>
+                <hr>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12 col-xs-12 no-right-padding">
+            <div class="col-md-12" id="vendor-details">
+                <ul class="list-group form-horizontal no-border-radius">
+                  <li class="list-group-item no-border-radius">
+                      <div class="form-group">
+                        <div class="col-md-4">
+                            <img src="/{{ vendor.getWebPath() }}" class="img-responsive" />
+                        </div>
+                        <div class="col-md-8">
+                            <h5>{{ vendor.getName }}</h5>
+                            {{ vendor.getCountry }} <br />
+                            {{ vendor.getWebsite }}
+                        </div>
+                      </div>
+                  </li>
+                  <li class="list-group-item no-border-radius">
+                      <div class="form-group">
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled list-inline">
+                                <li>
+                                    <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+                                </li>
+                                <li>
+                                    UPLOADED
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            {{ vendor.getNumberOfMedias }}
+                        </div>
+                      </div>
+                  </li>
+                  <li class="list-group-item list-same-block">
+                      <div class="form-group">
+                        <div class="col-xs-12">
+                            <ul class="list-unstyled list-inline">
+                                <li>
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                </li>
+                                <li>
+                                    {{ vendor.getContactPerson }}
+                                </li>
+                            </ul>
+                        </div>
+                      </div>
+                  </li>
+                  {% if vendor.getPhone %}
+                    <li class="list-group-item no-top-border list-same-block">
+                        <div class="form-group">
+                          <div class="col-xs-12">
+                                <ul class="list-unstyled list-inline">
+                                    <li>
+                                        <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                                    </li>
+                                    <li>
+                                        {{ vendor.getPhone }}
+                                    </li>
+                                </ul>
+                          </div>
+                        </div>
+                    </li>
+                  {% endif %}
+                  {% if vendor.getMobile %}
+                    <li class="list-group-item no-top-border list-same-block">
+                        <div class="form-group">
+                          <div class="col-xs-12">
+                                <ul class="list-unstyled list-inline">
+                                    <li>
+                                        <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                                    </li>
+                                    <li>
+                                        {{ vendor.getMobile }}
+                                    </li>
+                                </ul>
+                          </div>
+                        </div>
+                    </li>
+                  {% endif %}
+                  <li class="list-group-item no-top-border list-same-block">
+                      <div class="form-group">
+                        <div class="col-xs-12">
+                            <ul class="list-unstyled list-inline">
+                                <li>
+                                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                                </li>
+                                <li>
+                                    {{ vendor.getAddress }}<br>
+                                    {% if vendor.getPostcode %}
+                                        {{ vendor.getPostcode }}<br>
+                                    {% endif %}
+                                    {{ vendor.getCountry }}
+                                </li>
+                            </ul>
+                      </div>
+                  </li>
+                  {#
+                  <li class="list-group-item">
+                      <div class="form-group">
+                        <div class="col-md-2">
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-10">
+                            Mon 9:00am - 9:00pm<br>
+                            Tue 9:00am - 9:00pm<br>
+                            Wed 9:00am - 9:00pm<br>
+                            Thu 9:00am - 9:00pm<br>
+                            Fri 9:00am - 9:00pm<br>
+                            Sat 9:00am - 9:00pm<br>
+                            Sun 9:00am - 9:00pm
+                        </div>
+                      </div>
+                  </li>
+                  #}
+                  <li class="list-group-item">
+                      <div class="form-group">
+                        <div class="col-xs-12">
+                            <ul class="list-unstyled list-inline">
+                                <li>
+                                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                </li>
+                                <li>
+                                    {{ vendor.getWebsite }}
+                                </li>
+                            </ul>
+                        </div>
+                      </div>
+                  </li>
+                  <li class="list-group-item">
+                      <div class="form-group">
+                        <div class="col-xs-12">
+                            Member since {{ vendor.getUser.getCreatedAt | date("M Y") }}
+                        </div>
+                      </div>
+                  </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-sm-12 col-xs-12 margin-top35 no-left-padding vendor-panel">
+            <div class="tab">
+                <a href="">
+                    PORTFOLIO
+                </a>
+            </div>
+            <div id="cards">
+                {% for media in allMedia %}
+                    {% include 'PinterestLikeCoreBundle:Default:media-block.html.twig' with {'size': 3} %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(function() {
+            $('.not-link').on('click', function() {
+                return false;
+            });
+
+            var $container = $('#cards').isotope({
+                itemSelector: '.vendor-media',
+                // layoutMode: 'fitRows'
+            });
+            $container.imagesLoaded(function() {
+                $container.isotope('layout');
+                // $container.isotope('bindResize');
+            });
+
+            $container.isotope('on', 'layoutComplete',
+                function (laidOutItems) {
+                    // $container.isotope('layout');
+                    $container.isotope('bindResize');
+                    // console.log( 'Isotope layout completed on ' +
+                    //   laidOutItems.length + ' items' );
+                }
+            );
+
+            $('.pop').popover({
+                html: true,
+                content: function () {
+                    return $(this).parent().find('.content').html();
+                },
+                placement : 'bottom',
+                trigger: 'manual',
+                animation: true
+            }).on("mouseenter", function () {
+                var _this = this;
+                $(this).popover("show");
+                $('a.js-social-share').click(function(e) {
+                    e.preventDefault();
+                    var pageUrl = encodeURIComponent($('a.js-social-share').closest('ul').data('url'));
+                    windowPopup(this.href + pageUrl, 500, 300);
+                });
+
+                $(".popover").on("mouseleave", function () {
+                    $(_this).popover('hide');
+                });
+            }).on("mouseleave", function () {
+                var _this = this;
+                setTimeout(function () {
+                    if (!$(".popover:hover").length) {
+                        $(_this).popover("hide");
+                    }
+                }, 300);
+            });
+        });
+    </script>
+{% endblock javascriptsBottom %}

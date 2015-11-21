@@ -1,0 +1,4 @@
+services:
+#    the_wedly_user.example:
+#        class: PinterestLike\UserBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

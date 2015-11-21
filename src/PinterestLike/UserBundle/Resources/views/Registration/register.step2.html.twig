@@ -1,0 +1,44 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <div class="registration col-md-8 col-md-offset-2">
+        <div class="tab">
+            <ul class="nav nav-tabs">
+                {% if type == 'user' %}
+                    <li role="presentation" class="active">
+                        <a href="#reg-user" aria-controls="user" role="tab" data-toggle="tab">
+                           Register as User
+                        </a>
+                    </li>
+                {% else %}
+                    <li role="presentation" class="active">
+                        <a href="#reg-vendor" aria-controls="vendor" role="tab" data-toggle="tab">
+                            Register as Vendor
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="tab-content">
+            {% if type == 'user' %}
+                {% include 'PinterestLikeUserBundle:Registration:register.step2.user.form.html.twig' %}
+            {% else %}
+                {% include 'PinterestLikeUserBundle:Registration:register.step2.vendor.form.html.twig' %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock fos_user_content %}
+
+{% block javascriptsBottom %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.tab a').click(function (e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+{% endblock javascriptsBottom %}

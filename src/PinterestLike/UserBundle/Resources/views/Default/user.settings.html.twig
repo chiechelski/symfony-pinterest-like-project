@@ -1,0 +1,96 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center head-color">
+                <h1>USER SETTINGS</h1>
+                <hr>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12 no-right-padding vendor-panel tab-content">
+            <div class="col-xs-10 col-xs-offset-1" id="vendor-settings">
+                <form action="{{ path('user_settings') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+                    <div class="main-container">
+                        <div class="col-md-10 col-md-offset-1">
+                            {% if form.vars['errors'] is not empty %}
+                                <div class="alert alert-danger">
+                                     {{ form.vars['errors'][0].getMessage() }}
+                                </div>
+                            {% endif %}
+
+                            <div class="form-group">
+                                {{ form_label(form.firstName) }}
+                                {% if form.firstName.vars.errors|length %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form_errors(form.firstName) }}
+                                    </div>
+                                {% endif %}
+                                {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_label(form.lastName) }}
+                                {% if form.lastName.vars.errors|length %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form_errors(form.lastName) }}
+                                    </div>
+                                {% endif %}
+                                {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_label(form.weddingDate) }}
+                                {% if form.weddingDate.vars.errors|length %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form_errors(form.weddingDate) }}
+                                    </div>
+                                {% endif %}
+                                {{ form_widget(form.weddingDate, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_label(form.dateOfBirth) }}
+                                {% if form.dateOfBirth.vars.errors|length %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form_errors(form.dateOfBirth) }}
+                                    </div>
+                                {% endif %}
+                                {{ form_widget(form.dateOfBirth, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_label(form.gender) }}
+                                {% if form.gender.vars.errors|length %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form_errors(form.gender) }}
+                                    </div>
+                                {% endif %}
+                                {{ form_widget(form.gender, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="">
+                                <input type="submit" class="btn btn-info pull-right" value="Save" />
+                            </div>
+                        </div>
+                        {{ form_rest(form) }}
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+    </script>
+{% endblock javascriptsBottom %}

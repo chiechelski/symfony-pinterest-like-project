@@ -1,0 +1,168 @@
+{% extends app.request.query.get("popup") == 1 ?
+    'base_popup.html.twig' : 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 margin-top35 add-to-my-album">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading-one">
+                        <h4 class="panel-title">
+                            <a class="collapsed accordion-toggle" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-one" aria-expanded="true" aria-controls="collapse-one">
+                                ADD TO MY ALBUM
+                                <span class="glyphicon pull-right"></span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse-one" class="/*panel-collapse collapse*/" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <div class="selected-album">
+                                Choose Album
+                            </div>
+                            <div class="existent-album">
+                                {% for album in user.getAlbums %}
+                                    <div class="album" data-album-id="{{ album.getId() }}">
+                                        <a href="">
+                                            {{ album.getName() }}
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                                <div class="new-album row">
+                                    <div class="col-xs-9">
+                                        <input type="text" id="album-name" placeholder="Create Album" />
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <button id="create-album" class="btn btn-info"> Create </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-album">
+                                <textarea id="media-note" placeholder="Add A Note"></textarea>
+                            </div>
+                            <div class="actions">
+                                <button class="btn btn-info pull-right" id="add-to-album"> Add </button>
+                                <button class="btn btn-default pull-right close-btn"> Cancel </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {#
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading-two">
+                        <h4 class="panel-title">
+                            <a class="collapsed accordion-toggle" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-two" aria-expanded="true" aria-controls="collapse-two">
+                                  ADD TO MY VENDORS
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse-two" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-two">
+                        <div class="panel-body">
+                            Album list
+                        </div>
+                    </div>
+                </div>
+                {#
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  ADD TO MY BUDGET PLANNER
+                                  <span class="glyphicon pull-right">></span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            Album list
+                        </div>
+                    </div>
+                </div>
+                #}
+            </div>
+        </div>
+        <div class="col-sm-8 col-sm-offset-2 margin-top35 confimation-message hidden">
+            <div class="col-sm-10 col-sm-offset-1 alert alert-success text-center" role="alert">
+                <span class="glyphicon glyphicon-ok"></span>
+                Media has been succesfully added to your album!
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(function() {
+            $('#create-album').click(function () {
+
+                if ($('#album-name').val().length > 0) {
+                    $('#album-name').css('border-color', '#EEE');
+                    $.ajax({
+                        method: "POST",
+                        url: "{{ path('user_create_album') }}",
+                        data: { album: $('#album-name').val() }
+                    })
+                    .done(function(data) {
+                        $('<div class="album" data-album-id="' + data.result.album.id + '">' + data.result.album.name + '</div>').insertBefore('.new-album');
+                        applyAlbumSelection()
+                    });
+
+                    $('#album-name').val('');
+                }
+                else {
+                    $('#album-name').css('border-color', 'red');
+                }
+            });
+
+            function applyAlbumSelection() {
+                $('.album').unbind('click').click(function() {
+                    $('.album').removeClass('selected');
+                    $('.selected-album').css('color', '#87888c');
+                    $(this).addClass('selected');
+                    //$('.selected-album').html($(this).html() + '(selected)');
+                });
+            }
+
+            $('.close-btn').click(function () {
+                $('#modal-vendor-more-info').modal('hide');
+            });
+
+            applyAlbumSelection();
+
+            $('#add-to-album').click(function () {
+                if ($('.album.selected').length > 0) {
+                    $('#add-to-album').html('Saving...').addClass('disabled');
+                    $.ajax({
+                        method: "POST",
+                        url: "{{ path('user_add_media_to_album', {type: type, id: id}) }}",
+                        data: {
+                            album: $('.album.selected').data('album-id'),
+                            note: $('#media-note').val()
+                        }
+                    })
+                    .done(function(data) {
+                        if (data.result['album-media'].id) {
+                            $('#add-to-album').html('Saved!');
+
+                            $('.add-to-my-album').addClass('hidden');
+                            $('.confimation-message').removeClass('hidden');
+
+                            setTimeout(
+                                function() { $('#modal-vendor-more-info').modal('hide') }, 1500
+                            );
+
+                            $('#media-item-{{ type }}-{{ id }} .add-to-album .glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-heart');
+                        }
+                    });
+                }
+                else {
+                    $('.selected-album').css('color', 'red');
+                }
+            });
+        });
+    </script>
+{% endblock javascriptsBottom %}

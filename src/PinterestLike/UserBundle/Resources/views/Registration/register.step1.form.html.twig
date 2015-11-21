@@ -1,0 +1,72 @@
+<form action="{{ path('register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    <div class="main-container">
+        <div class="col-md-12 text-center">
+            <div class='user-view' {% if form.vars.value.type != 'vendor' %}style='display: none;'{% endif %}>
+                Register now to access free wedding planning tools! <br />
+            </div>
+            <div class='vendor-view'  {% if form.vars.value.type == 'vendor' %}style='display: none;'{% endif %}>
+                Register now to showcase your services to nearlyweds! <br />
+            </div>
+            If you are already a member, <a href="/login">log in</a> now.
+            <br /><br /><br />
+        </div>
+
+        <div class="col-md-5">
+            <div>
+                <button type="button" class="btn btn-info">
+                    Register with Google
+                </button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-info">
+                    Register with Facebook +
+                </button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-info">
+                    Register with Yahoo
+                </button>
+            </div>
+        </div>
+        <div class="col-md-2">
+            OR
+        </div>
+        <div class="col-md-5">
+
+            {% for flashMessage in app.session.flashbag.get('fos_user_success') %}
+                {{ flashMessage }}
+            {% endfor %}
+
+            {{ form_errors(form) }}
+
+            <div class="form-group">
+                {#{ form_label(form.email) }#}
+                {% if form.email.vars.errors|length %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form_errors(form.email) }}
+                    </div>
+                {% endif %}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email Address'}}) }}
+            </div>
+
+            {% for passwordField in form.plainPassword %}
+                <div class="form-group">
+                    {% if passwordField.vars.errors|length %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(passwordField) }}
+                        </div>
+                    {% endif %}
+                    {{ form_widget(passwordField, { 'attr': {'class': 'form-control', 'placeholder': (loop.index == 2 ? 'Confirm Password' : 'Password') } }) }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-12 text-center">
+            {{ form_errors(form.terms) }}
+            {{ form_widget(form.terms) }}
+            <label for="fos_user_registration_form_terms">I have read, understand and accept the <a class="link" href="#">Privacy & Terms</a></label>
+            <input type="submit" class="btn btn-info pull-right" value="REGISTER" />
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    {{ form_rest(form) }}
+</form>

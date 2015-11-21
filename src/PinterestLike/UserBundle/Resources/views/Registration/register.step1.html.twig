@@ -1,0 +1,48 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <div class="registration">
+        <div class="tab">
+            <ul class="nav nav-tabs">
+                <li role="presentation" {% if form.vars.value.type != 'vendor' %}class="active"{% endif %}>
+                    <a href="#reg-user" aria-controls="user" role="tab" data-toggle="tab">
+                       Register as User
+                    </a>
+                </li>
+                <li role="presentation" {% if form.vars.value.type == 'vendor' %}class="active"{% endif %}>
+                    <a href="#reg-vendor" aria-controls="vendor" role="tab" data-toggle="tab">
+                        Register as Vendor
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content">
+            {% include 'PinterestLikeUserBundle:Registration:register.step1.form.html.twig' %}
+        </div>
+    </div>
+{% endblock fos_user_content %}
+
+{% block javascriptsBottom %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.tab a').click(function () {
+                var type = $(this).attr('aria-controls');
+
+                $('#fos_user_registration_form_type').val(type);
+
+                if (type == 'user') {
+                    $('.user-view').css('display', 'block');
+                    $('.vendor-view').css('display', 'none');
+                }
+                else  {
+                    $('.user-view').css('display', 'none');
+                    $('.vendor-view').css('display', 'block');
+                }
+            });
+        });
+    </script>
+{% endblock javascriptsBottom %}

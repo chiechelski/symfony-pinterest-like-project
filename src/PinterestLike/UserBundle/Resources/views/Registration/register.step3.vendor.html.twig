@@ -1,0 +1,453 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <div class="vendor-upload-images">
+        <div class="col-md-4 white-block">
+            <h2>
+                Upload Images or Videos
+            </h2>
+            <div>
+                <div class="red small">Here are some tips to maximise your image exposure and increase your click-through rate!</div>
+            </div>
+            <div>
+                <h4>High Quality Images</h4>
+                <ol>
+                    <li>Your image must be at least 400 x 400 pixels.</li>
+                    <li>We recommend that your image be 800 pixels wide (when expanded) with no pixelation.</li>
+                    <li>In general, vertical images (portrait) work best as they will appear larger on the screen, making your work more visible while users browse.</li>
+                </ol>
+            </div>
+            <div>
+                <h4>Relevant Images</h4>
+                <ol>
+                    <li>Make sure your image represents your service or product. Avoid confusing users with an image that doesn't represent your core business.</li>
+                    <li>Keep your images updated. Users will only be frustrated if something they desire is no longer available.</li>
+                </ol>
+            </div>
+            <div>
+                <h4>Simple Descriptions</h4>
+                <ol>
+                    <li>Add a caption or short description so users understand what is on offer. Keep it short and sweet.</li>
+                    <li>Images with prices generate 35% more likes than those without. Source: Shopify <http://www.shopify.com/infographics/pinterest></li>
+                </ol>
+            </div>
+            <div>
+                <h4>No Advertising</h4>
+                <ol>
+                    <li>Remember, this is not a classifieds section. Any image that serves as an advertisement or promotion will be removed.</li>
+                    <li>Users are very image centric and content driven. Pages with excessive ads reduce click-through rates.Source: Microsoft <http://research.microsoft.com/pubs/68148/predictingclicks.pdf></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="tab">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" {% if formType == 'images' %}class="active"{% endif %}>
+                        <a href="#upload-images" aria-controls="images" role="tab" data-toggle="tab">
+                            Upload Images
+                        </a>
+                    </li>
+                    <li role="presentation" {% if formType == 'videos' %}class="active"{% endif %}>
+                        <a href="#upload-videos" aria-controls="videos" role="tab" data-toggle="tab">
+                            Upload Videos
+                        </a>
+                    </li>
+                </ul>
+                 <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane {% if formType == 'images' %}active{% endif %}" id="upload-images">
+                        <div class="pull-right loading-img" style="display: none;">
+                            <img src="{{ asset('/bundles/PinterestLikestatic/images/ajax-loader.gif') }}" alt="loading" />
+                        </div>
+
+                        <div class="red small text-center">Images must be a minimum size of 400px x 400px</div>
+
+                        <br />
+
+                        <div id="dropzone" class="fade well">Drop files here or click here</div>
+
+                        <span class="btn btn-success fileinput-button" style="display: none;">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Select files...</span>
+                            <!-- The file input field used as target for the file upload widget -->
+                            <input id="fileupload" type="file" name="files[]" multiple>
+                        </span>
+
+                        <br />
+
+                        <form action="{{ path('vendor_register_step3') }}" {{ form_enctype(formImages) }} method="POST" class="fos_user_registration_register">
+                            <!-- The global progress bar -->
+                            {#<div id="progress" class="progress">
+                                <div class="progress-bar progress-bar-success"></div>
+                            </div>#}
+
+                            <!-- The container for the uploaded files -->
+                            <div id="files" class="files">
+                                {% for image in formImages.images %}
+                                {#% for images in app.user.vendor.getImages %#}
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <a href="#" class="remove" data-image-id="{{ image.vars.value.getId }}">Remove <button type="button" class="close">×</button></a>
+                                            <img src="/{{ image.vars.value.getWebPath }}" style="max-width: 100%;" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                {% if image.category.vars.errors|length %}
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{ form_errors(image.category) }}
+                                                    </div>
+                                                {% endif %}
+                                                {{ form_widget(image.category, {'attr': {'class': 'form-control', 'placeholder': 'Choose Category'}}) }}
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                {% if image.colour.vars.errors|length %}
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{ form_errors(image.colour) }}
+                                                    </div>
+                                                {% endif %}
+                                                {{ form_widget(image.colour, {'attr': {'class': 'form-control', 'placeholder': 'Choose Colour'}}) }}
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                {% if image.description.vars.errors|length %}
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{ form_errors(image.description) }}
+                                                    </div>
+                                                {% endif %}
+                                                {{ form_widget(image.description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
+                                                {{ form_widget(image.remove, {'attr': {'class': 'hide'}}) }}
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div style="clear: both;"></div>
+
+                            <div id="buttons" class="">
+                                {% if vendor.getImages().count() > 0 or vendor.getImages().count() > 0 %}
+                                    <a href="{{ path('vendor_profile', {'vendor': vendor.id}) }}" id="next" class="btn btn-default pull-right">Next</a>
+                                {% endif %}
+                                <input type="submit" id="submit" class="btn btn-info pull-right" value="Save" />
+                            </div>
+
+                            {#{ form_rest(form) }#}
+
+                            <div style="clear: both;"></div>
+                        </form>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane {% if formType == 'videos' %}active{% endif %}" id="upload-videos">
+                        <h4 class="text-center">Quickly upload your videos by pasting links below</h4>
+                        <div class="red small text-center">You must have the right to any videos you upload</div>
+
+                        <br /><br />
+
+                        <div class="col-md-10 col-md-offset-1 text-center">
+                            Vimeo or Youtube URL <input type="text" name="video-url" id="video-url" style="width: 50%;" />
+                            <input type="button" id="video-submit" class="btn btn-info" value="+" />
+                            <div class="pull-right loading-video-img" style="display: none;">
+                                <img src="{{ asset('/bundles/PinterestLikestatic/images/ajax-loader.gif') }}" alt="loading" />
+                            </div>
+                        </div>
+
+                        <br /><br /><br /><br />
+
+                        <form action="{{ path('vendor_register_step3') }}" {{ form_enctype(formVideos) }} method="POST" class="fos_user_registration_register">
+
+                            <div id="videos" class="files">
+                                {% for video in formVideos.videos %}
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <a href="#" class="remove" data-image-id="{{ video.vars.value.getId }}">Remove <button type="button" class="close">×</button></a>
+                                            <img src="/{{ video.vars.value.getWebPath }}" style="max-width: 100%;" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                {% if video.category.vars.errors|length %}
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{ form_errors(video.category) }}
+                                                    </div>
+                                                {% endif %}
+                                                {{ form_widget(video.category, {'attr': {'class': 'form-control', 'placeholder': 'Choose Category'}}) }}
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                {% if video.colour.vars.errors|length %}
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{ form_errors(video.colour) }}
+                                                    </div>
+                                                {% endif %}
+                                                {{ form_widget(video.colour, {'attr': {'class': 'form-control', 'placeholder': 'Choose Colour'}}) }}
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                {% if video.description.vars.errors|length %}
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{ form_errors(video.description) }}
+                                                    </div>
+                                                {% endif %}
+                                                {{ form_widget(video.description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
+                                                {{ form_widget(video.remove, {'attr': {'class': 'hide'}}) }}
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div style="clear: both;"></div>
+
+                            <div id="buttons" class="">
+                                {% if vendor.getImages().count() > 0 or vendor.getImages().count() > 0 %}
+                                    <a href="{{ path('vendor_profile', {'vendor': vendor.id}) }}" id="next" class="btn btn-default pull-right">Next</a>
+                                {% endif %}
+                                <input type="submit" id="submit" class="btn btn-info pull-right" value="Save" />
+                            </div>
+
+                            {#{ form_rest(form) }#}
+
+                            <div style="clear: both;"></div>
+                        </form>
+
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="template-form" style="display: none;">
+        <div class="row">
+            <div class="col-md-4">
+                <a href="#" class="remove" data-image-id="">Remove <button type="button" class="close">×</button></a>
+                <img src="" style="max-width: 100%;" />
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    {{ form_widget(formImages.category, {'attr': {'class': 'form-control', 'placeholder': 'Choose Category'}}) }}
+                    <div class="clearfix"></div>
+                </div>
+                <div class="form-group">
+                    {{ form_widget(formImages.colour, {'attr': {'class': 'form-control', 'placeholder': 'Choose Colour'}}) }}
+                    <div class="clearfix"></div>
+                </div>
+                <div class="form-group">
+                    {{ form_widget(formImages.description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
+                    {{ form_widget(formImages.remove, {'attr': {'class': 'hide'}}) }}
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock fos_user_content %}
+
+{% block javascriptsBottom %}
+
+    {{ parent() }}
+
+    {% javascripts '@jquery_file_upload' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+        var imgCount = {{ formImages.images | length | default(0) }};
+        var videoCount = {{ formVideos.videos | length | default(0) }};
+
+        $('#fileupload').fileupload({
+            url: "{{ oneup_uploader_endpoint('gallery') }}",
+            formData: { type: 'vendorImg' },
+            dropZone: $('#dropzone'),
+            dataType: 'json',
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            autoUpload: true,
+            maxFileSize: 5000000, // 5 MB
+            // Enable image resizing, except for Android and Opera,
+            // which actually support image resizing, but fail to
+            // send Blob objects via XHR requests:
+            disableImageResize: /Android(?!.*Chrome)|Opera/
+                .test(window.navigator.userAgent),
+            previewMaxWidth: 180,
+            previewMaxHeight: 180,
+            previewCrop: false,
+            /*add: function (e, data) {
+                console.log('add');
+            },*/
+            done: function (e, data) {
+                $.each(data.files, function (index, file) {
+                    var $node = $('#template-form');
+
+                    if (data.result.imageSrc != '') {
+                        $node.find('img').attr('src', data.result.imageSrc);
+                        $node.find('.remove').data('image-id', data.result.imageId);
+                    }
+                    else if (file.preview) {
+                        /*node
+                            .prepend('<br>')
+                            .prepend(file.preview);*/
+                    }
+
+                    // [' + data.result.imageId + ']
+
+                    $node.find('a.remove').attr('data-image-id', data.result.imageId);
+                    $node.find('#vendor_images_category').attr('name', 'vendor_images[images][' + imgCount + '][category]');
+                    $node.find('#vendor_images_category').attr('required', 'required');
+                    $node.find('#vendor_images_colour').attr('name', 'vendor_images[images][' + imgCount + '][colour]');
+                    $node.find('#vendor_images_colour').attr('required', 'required');
+                    $node.find('#vendor_images_description').attr('name', 'vendor_images[images][' + imgCount + '][description]');
+                    $node.find('#vendor_images_description').attr('required', 'required');
+                    $node.find('#vendor_images_remove').attr('name', 'vendor_images[images][' + imgCount + '][remove]');
+
+                    $('#files').append($node.html());
+
+                    // remove from hidden field
+                    $node.find('#vendor_images_category').removeAttr('required');
+                    $node.find('#vendor_images_category').attr('name', 'category');
+                    $node.find('#vendor_images_colour').removeAttr('required');
+                    $node.find('#vendor_images_colour').attr('name', 'colour');
+                    $node.find('#vendor_images_description').removeAttr('required');
+                    $node.find('#vendor_images_description').attr('name', 'description');
+                    $node.find('#vendor_images_remove').attr('name', 'remove');
+
+                    imgCount++;
+
+                    changeRemove();
+                });
+
+                // console.log('log');
+            },
+            drop: function (e, data) {
+                $('.loading-img').css('display', 'block');
+            },
+            change: function (e, data) {
+                $('.loading-img').css('display', 'block');
+            },
+            complete: function (e, data) {
+                // console.log('completeee');
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                // console.log(progress);
+                if (progress == 100) {
+                    setTimeout(function () { $('.loading-img').css('display', 'none'); }, 1000);
+                }
+                else {
+                    $('.loading-img').css('display', 'block');
+                }
+
+                $('#progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+                );
+            }
+        }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+        $('#dropzone').click(function () {
+            $('#fileupload').click();
+        });
+
+        $(document).bind('dragover', function (e) {
+            var dropZone = $('#dropzone'),
+                timeout = window.dropZoneTimeout;
+            if (!timeout) {
+                dropZone.addClass('in');
+            } else {
+                clearTimeout(timeout);
+            }
+            var found = false,
+                node = e.target;
+            do {
+                if (node === dropZone[0]) {
+                    found = true;
+                    break;
+                }
+                node = node.parentNode;
+            } while (node != null);
+            if (found) {
+                dropZone.addClass('hover');
+            } else {
+                dropZone.removeClass('hover');
+            }
+            window.dropZoneTimeout = setTimeout(function () {
+                window.dropZoneTimeout = null;
+                dropZone.removeClass('in hover');
+            }, 100);
+        });
+
+        function changeRemove() {
+            $('a.remove').unbind('click').click(function (e) {
+                e.preventDefault();
+                var dataId = $(this).data('image-id');
+                console.log(dataId);
+                $(this).closest('.row').slideUp();
+                $(this).closest('.row').find("input[name$='[remove]']").val(dataId);
+                $(this).closest('.row').find('select,textarea').removeAttr('required');
+            });
+        }
+
+        changeRemove();
+
+        $('#submit').click(function () {
+            $('form').submit();
+        });
+
+        $('#video-submit').click(function () {
+
+            $(this).parent().find('.loading-video-img').css('display', 'block');
+            $(this).addClass('disabled');
+
+            $.ajax({
+                method: "POST",
+                url: "{{ path('vendor_add_video') }}",
+                data: { url: $(this).parent().find('#video-url').val() }
+            })
+            .done(function(data) {
+
+                if (typeof data.result.video != 'undefined') {
+                    var $node = $('#template-form');
+                    $node.find('img').attr('src', data.result.video.src);
+                    $node.find('.remove').data('image-id', data.result.video.id);
+
+                    $node.find('a.remove').attr('data-image-id', data.result.video.id);
+                    $node.find('#vendor_images_category').attr('name', 'vendor_videos[videos][' + videoCount + '][category]');
+                    $node.find('#vendor_images_category').attr('required', 'required');
+                    $node.find('#vendor_images_colour').attr('name', 'vendor_videos[videos][' + videoCount + '][colour]');
+                    $node.find('#vendor_images_colour').attr('required', 'required');
+                    $node.find('#vendor_images_description').attr('name', 'vendor_videos[videos][' + videoCount + '][description]');
+                    $node.find('#vendor_images_description').attr('required', 'required').html(data.result.video.description);
+                    $node.find('#vendor_images_remove').attr('name', 'vendor_videos[videos][' + videoCount + '][remove]');
+
+                    $('#videos').append($node.html());
+
+                    // remove from hidden field
+                    $node.find('#vendor_images_category').removeAttr('required');
+                    $node.find('#vendor_images_category').attr('name', 'category');
+                    $node.find('#vendor_images_colour').removeAttr('required');
+                    $node.find('#vendor_images_colour').attr('name', 'colour');
+                    $node.find('#vendor_images_description').removeAttr('required');
+                    $node.find('#vendor_images_description').attr('name', 'description');
+                    $node.find('#vendor_images_remove').attr('name', 'remove');
+                    $node.find('#vendor_images_description').val('');
+
+                    videoCount++;
+
+                    changeRemove();
+                }
+
+                $('#video-submit').parent().find('.loading-video-img').css('display', 'none');
+                $('#video-submit').removeClass('disabled');
+                $('#video-url').val('')
+            });
+
+            // $('form').submit();
+        });
+    });
+    </script>
+
+{% endblock javascriptsBottom %}

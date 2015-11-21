@@ -1,0 +1,68 @@
+<form action="{{ path('register_step2', {type: type}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    <div class="main-container">
+        <div class="col-md-10 col-md-offset-1">
+
+            {% for flashMessage in app.session.flashbag.get('fos_user_success') %}
+                {{ flashMessage }}
+            {% endfor %}
+
+            {{ form_errors(form) }}
+
+            <div class="form-group">
+                {{ form_label(form.firstName) }}
+                {% if form.firstName.vars.errors|length %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form_errors(form.firstName) }}
+                    </div>
+                {% endif %}
+                {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.lastName) }}
+                {% if form.lastName.vars.errors|length %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form_errors(form.lastName) }}
+                    </div>
+                {% endif %}
+                {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.weddingDate) }}
+                {% if form.weddingDate.vars.errors|length %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form_errors(form.weddingDate) }}
+                    </div>
+                {% endif %}
+                {{ form_widget(form.weddingDate, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.dateOfBirth) }}
+                {% if form.dateOfBirth.vars.errors|length %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form_errors(form.dateOfBirth) }}
+                    </div>
+                {% endif %}
+                {{ form_widget(form.dateOfBirth, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.gender) }}
+                {% if form.gender.vars.errors|length %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form_errors(form.gender) }}
+                    </div>
+                {% endif %}
+                {{ form_widget(form.gender, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-info pull-right" value="REGISTER" />
+            </div>
+        </div>
+        {{ form_rest(form) }}
+        <div class="clearfix"></div>
+    </div>
+</form>

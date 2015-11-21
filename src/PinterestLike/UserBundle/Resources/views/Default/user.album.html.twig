@@ -1,0 +1,107 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+
+    <div class="row user-albums">
+        <div class="col-md-12">
+            <div class="text-center head-color">
+                <h1>MY ALBUM - {{ album.getName }}</h1>
+                <hr>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12 margin-top35 no-left-padding">
+            <div id="cards">
+                {% for media in allMedia %}
+                    {% include 'PinterestLikeCoreBundle:Default:media-block.html.twig' with {'size': 5} %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(function(){
+
+            $('.media-item .wrapper').click(function() {
+                var $parent = $(this).parent();
+                openPopup($parent.data('media-type'), this, $parent.data('media-id'));
+            });
+
+            function openSavePopup(type, obj, id)
+            {
+                var target = '/user/media/save/' + type  + '/' + id + '?popup=1';
+
+                // load the url and show modal on success
+                $("#modal-vendor-more-info .modal-body").load(target, function() {
+                     $("#modal-vendor-more-info").removeClass('modal-vendor-more-info').addClass('top-margin-modal').modal("show");
+                });
+            }
+
+            $('.media-item .add-to-album').click(function(e) {
+                e.preventDefault();
+                var $parent = $(this).parent().parent();
+                openSavePopup($parent.data('media-type'), this, $parent.data('media-id'));
+            });
+
+            var $container = $('#cards').isotope({
+                itemSelector: '.vendor-media',
+            });
+            $container.imagesLoaded( function() {
+                $container.isotope('layout');
+                // $container.isotope('bindResize');
+            });
+            $container.isotope( 'on', 'layoutComplete',
+              function( laidOutItems ) {
+                // $container.isotope('layout');
+                $container.isotope('bindResize');
+                // console.log( 'Isotope layout completed on ' +
+                //   laidOutItems.length + ' items' );
+              }
+            );
+
+            $('.not-link').on('click', function() {
+                return false;
+            });
+
+            $('.pop').popover({
+                html: true,
+                // title: function () {
+                //     return $(this).parent().find('.head').html();
+                // },
+                content: function () {
+                    return $(this).parent().find('.content').html();
+                },
+                placement : 'bottom',
+                trigger: 'manual',
+                animation: true
+            }).on("mouseenter", function () {
+                var _this = this;
+                $(this).popover("show");
+
+                $('a.js-social-share').click(function(e) {
+                    e.preventDefault();
+                    var pageUrl = encodeURIComponent($('a.js-social-share').closest('ul').data('url'));
+                    windowPopup(this.href + pageUrl, 500, 300);
+                });
+
+                $(".popover").on("mouseleave", function () {
+                    $(_this).popover('hide');
+                });
+            }).on("mouseleave", function () {
+                var _this = this;
+                setTimeout(function () {
+                    if (!$(".popover:hover").length) {
+                        $(_this).popover("hide");
+                    }
+                }, 300);
+            });
+        });
+    </script>
+{% endblock javascriptsBottom %}
