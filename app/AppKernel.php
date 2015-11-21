@@ -23,6 +23,9 @@ class AppKernel extends Kernel
 
             new PinterestLike\CoreBundle\PinterestLikeCoreBundle(),
             new PinterestLike\StaticBundle\PinterestLikeStaticBundle(),
+            new PinterestLike\UserBundle\PinterestLikeUserBundle(),
+
+            new PinterestLike\VendorBundle\PinterestLikeVendorBundle(),
 
             // The admin requires some twig functions defined in the security
             // bundle, like is_granted
