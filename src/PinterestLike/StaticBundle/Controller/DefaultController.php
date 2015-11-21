@@ -19,7 +19,7 @@ class DefaultController extends Controller
         $request = $this->getRequest();
         $params['search-term'] = $request->get('search-term', '');
 
-        $allMedia = $imageRepository->getAllMedia(0, 0, $params);
+        $allMedia = $imageRepository->getAllMedia($params);
 
         return $this->render('PinterestLikeStaticBundle:Default:index.html.twig',
             array(
@@ -50,7 +50,7 @@ class DefaultController extends Controller
 
         $params = array('category' => $category->getId());
 
-        $allMedia = $imageRepository->getAllMedia(0, 0, $params);
+        $allMedia = $imageRepository->getAllMedia($params);
 
         return $this->render('PinterestLikeStaticBundle:Default:category.html.twig',
             array(
@@ -58,36 +58,5 @@ class DefaultController extends Controller
                 'allMedia' => $allMedia
             )
         );
-    }
-
-    /**
-     * TODO - Change to slug
-     *
-     * @Route("/colour/{id}", name="filter_colour")
-     */
-    public function colourAction(\PinterestLike\VendorBundle\Entity\Colour $colour)
-    {
-        $manager = $this->getDoctrine()->getManager();
-
-        $imageRepository = $manager->getRepository('PinterestLikeVendorBundle:VendorImage');
-
-        $params = array('colour' => $colour->getId());
-
-        $allMedia = $imageRepository->getAllMedia(0, 0, $params);
-
-        return $this->render('PinterestLikeStaticBundle:Default:colour.html.twig',
-            array(
-                'pageColour' => $colour,
-                'allMedia' => $allMedia
-            )
-        );
-    }
-
-    /**
-     * @Route("/terms", name="terms")
-     */
-    public function termsAction()
-    {
-        return $this->render('PinterestLikeStaticBundle:Default:terms.html.twig', array());
     }
 }

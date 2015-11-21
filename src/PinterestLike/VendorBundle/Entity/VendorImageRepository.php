@@ -16,38 +16,10 @@ class VendorImageRepository extends EntityRepository
      *  TODO - CHANGE EVERYTHING HERE - DIRTY AND QUICK WAY - ADD OTHER LEVEL VENDOR MEDIA LINKED TO VIDEO AND IMAGE
      *   Speed it up using native sql
     */
-    public function getAllMedia($vendorId = 0, $userAlbumId = 0, $params = array())
+    public function getAllMedia($params = array())
     {
         /** @var EntityManager $entityManager */
         $connection = $this->getEntityManager()->getConnection();
-
-        $vendorWhere = '';
-        if (!empty($vendorId)) {
-            $vendorWhere = ' AND v.id = ' . ((int) $vendorId);
-        }
-
-        $albumImageWhere = '';
-        $albumVideoWhere = '';
-        $extraSelect = '';
-        if (!empty($userAlbumId)) {
-            $albumImageWhere = "
-                INNER JOIN user_album_media uab
-                    ON uab.image_id = vi.id  AND uab.user_album_id =  "  . ((int) $userAlbumId);
-            $albumVideoWhere = "
-                INNER JOIN user_album_media uab
-                    ON uab.video_id = vv.id AND uab.user_album_id =  "  . ((int) $userAlbumId);
-            $extraSelect = ', uab.description album_desc';
-        }
-
-        $categoryWhere = '';
-        if (!empty($params['category'])) {
-            $categoryWhere = " AND c.id = " . (int) $params['category'];
-        }
-
-        $colourWhere = '';
-        if (!empty($params['colour'])) {
-            $colourWhere = " AND c2.id = " . (int) $params['colour'];
-        }
 
         // may have performance issues, need to check this later
         $where = '';
@@ -63,35 +35,21 @@ class VendorImageRepository extends EntityRepository
         $stmt = $connection->prepare("
             SELECT *
             FROM (
-                SELECT vi.id, 'image' type, '' as video_type, '' as video_id, v.id vendor_id,  v.name vendor_name , vi.image_path, vi.description, vi.created_at, c.name category_name " . $extraSelect .  "
+                SELECT vi.id, 'image' type, '' as video_type, '' as video_id, v.id vendor_id,  v.name vendor_name , vi.image_path, vi.description, vi.created_at
                 FROM vendor v
                 INNER JOIN vendor_image vi
                     ON v.id = vi.vendor_id
-                        " . $vendorWhere . "
                 INNER JOIN category c
                     ON c.id = vi.category_id
-                        " . $categoryWhere . "
-                INNER JOIN colour c2
-                    ON c2.id = vi.colour_id
-                        " . $colourWhere . "
-
-                " . $albumImageWhere . "
 
                 UNION
 
-                SELECT vv.id, 'video' type, vv.video_type, vv.video_id, v.id vendor_id, v.name vendor_name, vv.image_path, vv.description, vv.created_at, c.name category_name " . $extraSelect .  "
+                SELECT vv.id, 'video' type, vv.video_type, vv.video_id, v.id vendor_id, v.name vendor_name, vv.image_path, vv.description, vv.created_at
                 FROM vendor v
                 INNER JOIN vendor_video vv
                     ON v.id = vv.vendor_id
-                        " . $vendorWhere . "
                 INNER JOIN category c
                     ON c.id = vv.category_id
-                        " . $categoryWhere . "
-                INNER JOIN colour c2
-                    ON c2.id = vv.colour_id
-                        " . $colourWhere . "
-
-                " . $albumVideoWhere . "
 
             ) AS aux
             WHERE 1 = 1
@@ -106,8 +64,6 @@ class VendorImageRepository extends EntityRepository
         $stmt->execute();
 
         $result = $stmt->fetchAll();
-
-        // echo '<pre>'; print_r($result); echo '</pre>';
 
         return $result;
     }

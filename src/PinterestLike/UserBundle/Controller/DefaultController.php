@@ -204,28 +204,6 @@ class DefaultController extends Controller
 
     /**
      *
-     * @Route("/user/album/{album}", name="user_album")
-     */
-    public function userAlbum(UserAlbum $album)
-    {
-        $manager = $this->getDoctrine()->getManager();
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-
-        $imageRepository = $manager->getRepository('PinterestLikeVendorBundle:VendorImage');
-        $allMedia = $imageRepository->getAllMedia(0, $album->getId());
-
-        return $this->container->get('templating')->renderResponse(
-            'PinterestLikeUserBundle:Default:user.album.html.twig',
-            array(
-                'user'     => $user,
-                'album'    => $album,
-                'allMedia' => $allMedia
-            )
-        );
-    }
-
-    /**
-     *
      * @Route("/user/vendors", name="user_vendors")
      */
     public function userVendors()
