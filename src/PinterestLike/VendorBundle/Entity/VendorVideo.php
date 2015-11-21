@@ -107,12 +107,6 @@ class VendorVideo extends UploadableImage implements \JsonSerializable
     protected $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PinterestLike\VendorBundle\Entity\Colour")
-     * @ORM\JoinColumn(name="colour_id", referencedColumnName="id", nullable=true)
-     */
-    protected $colour;
-
-    /**
      * Get id
      *
      * @return integer

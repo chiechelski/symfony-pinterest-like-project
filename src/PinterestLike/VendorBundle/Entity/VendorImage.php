@@ -50,7 +50,7 @@ class VendorImage extends UploadableImage implements \JsonSerializable
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-    
+
     /**
      * @var string
      *
@@ -78,7 +78,7 @@ class VendorImage extends UploadableImage implements \JsonSerializable
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="PinterestLike\VendorBundle\Entity\Category")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true)
@@ -86,15 +86,9 @@ class VendorImage extends UploadableImage implements \JsonSerializable
     protected $category;
     
     /**
-     * @ORM\ManyToOne(targetEntity="PinterestLike\VendorBundle\Entity\Colour")
-     * @ORM\JoinColumn(name="colour_id", referencedColumnName="id", nullable=true)
-     */
-    protected $colour;
-    
-    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -140,13 +134,13 @@ class VendorImage extends UploadableImage implements \JsonSerializable
     /**
      * Get file
      *
-     * @return string 
+     * @return string
      */
     public function getFile()
     {
         return $this->file;
     }
-    
+
     /**
      * Set name
      *
@@ -163,7 +157,7 @@ class VendorImage extends UploadableImage implements \JsonSerializable
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -186,7 +180,7 @@ class VendorImage extends UploadableImage implements \JsonSerializable
     /**
      * Get imagePath
      *
-     * @return string 
+     * @return string
      */
     public function getImagePath()
     {
@@ -210,7 +204,7 @@ class VendorImage extends UploadableImage implements \JsonSerializable
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -233,13 +227,13 @@ class VendorImage extends UploadableImage implements \JsonSerializable
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
-    
+
     /**
      * Set description
      *
@@ -256,13 +250,13 @@ class VendorImage extends UploadableImage implements \JsonSerializable
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
         return $this->description;
     }
-    
+
     /**
      * Set category
      *
@@ -285,7 +279,7 @@ class VendorImage extends UploadableImage implements \JsonSerializable
     {
         return $this->category;
     }
-    
+
     /**
      * Set colour
      *
@@ -308,7 +302,7 @@ class VendorImage extends UploadableImage implements \JsonSerializable
     {
         return $this->colour;
     }
-    
+
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
@@ -352,7 +346,7 @@ class VendorImage extends UploadableImage implements \JsonSerializable
         // the absolute directory path where uploaded documents should be saved
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
-    
+
     public function jsonSerialize()
     {
         return array('url' => $this->getWebPath());
