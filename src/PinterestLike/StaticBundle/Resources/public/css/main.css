@@ -103,3 +103,14 @@ body {
 .contents-block .vendor-info p {
     margin: 0;
 }
+
+/* modal */
+
+.modal .modal-content {
+    padding: 30px;
+}
+
+.modal .modal-content .fos_user_registration_register .btn {
+    width: 85%;
+    margin: 5px;
+}
