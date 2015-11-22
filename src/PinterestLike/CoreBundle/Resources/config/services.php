@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\Parameter;
 /*
 
 $container->setDefinition(
-    'the_wedly_core.example',
+    'the_pinterestlike_core.example',
     new Definition(
         'PinterestLike\CoreBundle\Example',
         array(

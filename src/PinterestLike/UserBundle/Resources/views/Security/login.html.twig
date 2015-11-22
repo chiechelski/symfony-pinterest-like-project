@@ -7,17 +7,12 @@
             <div class="main-container">
 
                 <div class="col-md-12 text-center">
-                    Log in to your Wedly Account.<br />
+                    Log in to your Account.<br />
                     If you don't  have an account with us, please <a href="/register">create an account</a> now.
                     <br /><br /><br />
                 </div>
 
                 <div class="col-md-5">
-                    <div>
-                        <a href="{{ path('hwi_oauth_service_redirect', {'service': 'yahoo' }) }}" alt="Sign in with Facebook"  class="btn btn-info">
-                            Login with Yahoo
-                        </a>
-                    </div>
                     <div>
                         <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google' }) }}" alt="Sign in with Facebook"  class="btn btn-info">
                             Login with Google
@@ -29,9 +24,11 @@
                         </a>
                     </div>
                 </div>
+
                 <div class="col-md-2">
                     OR
                 </div>
+
                 <div class="col-md-5">
                     {% if error %}
                         <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
@@ -46,11 +43,6 @@
                     <div class="form-group">
                         <input type="password" id="password" class="form-control" placeholder="Password" name="_password" required="required" />
                     </div>
-
-                    {#
-                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                    <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
-                    #}
 
                     <input type="submit" id="_submit" name="_submit" value="Login" />
                 </div>
