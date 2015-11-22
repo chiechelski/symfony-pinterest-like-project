@@ -70,7 +70,7 @@ This is a generic HTML5 wrapper that should be suitable for any web page to exte
                         <ul class="nav navbar-nav navbar-right">
 
                             <li class="page-scroll">
-                                <a href="#portfolio">Images</a>
+                                <a href="#cards">Images</a>
                             </li>
 
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -132,14 +132,18 @@ This is a generic HTML5 wrapper that should be suitable for any web page to exte
 
         {# everything between the header and footer #}
         {% block main %}
-            <section id="portfolio">
+            <section id="cards">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12 text-center">
-                            <h2>Images</h2>
-                            <hr class="star-primary">
+
+                    {% block cards %}
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h2>Images</h2>
+                                <hr class="star-primary">
+                            </div>
                         </div>
-                    </div>
+                    {% endblock cards %}
+
                     <div class="row">
                         {% block flashMessages %}
                             {{ include('PinterestLikeStaticBundle:FlashMessages:flashMessages.html.twig') }}
