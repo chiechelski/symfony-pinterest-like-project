@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 use PinterestLike\UserBundle\Form\Type\UserStep2RegistrationFormType;
 use PinterestLike\UserBundle\Form\Type\VendorStep2RegistrationFormType;
 use PinterestLike\VendorBundle\Form\Type\VendorMediaFormType;
-use PinterestLike\WeddingBundle\Entity\Wedding;
 use PinterestLike\VendorBundle\Entity\Vendor;
 use PinterestLike\VendorBundle\Entity\VendorImage;
 use PinterestLike\VendorBundle\Entity\VendorVideo;
