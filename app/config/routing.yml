@@ -1,8 +1,14 @@
 
-PinterestLike_core:
+pinterest_like_core:
     resource: "@PinterestLikeCoreBundle/Controller/"
 
-PinterestLike_static:
+pinterest_like_user:
+    resource: "@PinterestLikeUserBundle/Controller/"
+
+pinterest_like_vendor:
+    resource: "@PinterestLikeVendorBundle/Controller/"
+
+pinterestLike_static:
     resource: "@PinterestLikeStaticBundle/Controller/"
 
 admin:

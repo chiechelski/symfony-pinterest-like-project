@@ -11,13 +11,6 @@ class UserStep2RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $years = range(date('Y'), date('Y') - 80);
-        $yearsWedding = range(date('Y'), date('Y') + 10);
-
-        // setting up wedding data
-        $weddingDate = null;
-        if ($options['data']->getWedding()) {
-            $weddingDate = $options['data']->getWedding()->getWeddingDate();
-        }
 
         $builder
             ->add(
@@ -49,21 +42,6 @@ class UserStep2RegistrationFormType extends AbstractType
                     'widget'    => 'choice',
                     'format'    => 'dd/MM/yyyy',
                     'years'     => $years,
-                    'empty_value' => array(
-                        'year' => 'Year',
-                        'month' => 'Month',
-                        'day' => 'Day'
-                    )
-                )
-            )
-            ->add('weddingDate', 'date',
-                array(
-                    'required'  => false,
-                    'widget'    => 'choice',
-                    'mapped'    => false,
-                    'data'      => $weddingDate,
-                    'format'    => 'dd/MM/yyyy',
-                    'years'     => $yearsWedding,
                     'empty_value' => array(
                         'year' => 'Year',
                         'month' => 'Month',

@@ -114,7 +114,13 @@ class User extends BaseUser implements AdvancedUserInterface, \Serializable, \Js
     protected $type;
 
     /**
-     * vendor or user
+     * @var Vendor
+     * @ORM\OneToOne(targetEntity="PinterestLike\VendorBundle\Entity\Vendor", mappedBy="user", cascade={"persist"})
+     */
+    protected $vendor;
+
+    /**
+     * Registration steps
      *
      * @Assert\NotBlank(groups={"user","registration"})
      * @ORM\Column(name="registration_step", type="string", length=5, nullable=true)
@@ -482,6 +488,50 @@ class User extends BaseUser implements AdvancedUserInterface, \Serializable, \Js
     public function getLockedAt()
     {
         return $this->lockedAt;
+    }
+
+    /**
+     * Set vendor
+     *
+     * @param \PinterestLike\VendorBundle\Entity\Vendor $vendor
+     * @return User
+     */
+    public function setVendor(\PinterestLike\VendorBundle\Entity\Vendor $vendor = null)
+    {
+        $this->vendor = $vendor;
+
+        $this->vendor->setUser($this);
+
+        return $this;
+    }
+
+    /**
+     * Get vendor
+     *
+     * @return \PinterestLike\VendorBundle\Entity\Vendor
+     */
+    public function getVendor()
+    {
+        return $this->vendor;
+    }
+
+    public function getVendorId()
+    {
+        if ($this->getVendor()) {
+            return $this->getVendor()->getId();
+        }
+
+        return null;
+    }
+
+    public function isVendor()
+    {
+        if ($this->getVendor()) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**

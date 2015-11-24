@@ -29,16 +29,6 @@
             </div>
 
             <div class="form-group">
-                {{ form_label(form.weddingDate) }}
-                {% if form.weddingDate.vars.errors|length %}
-                    <div class="alert alert-danger" role="alert">
-                        {{ form_errors(form.weddingDate) }}
-                    </div>
-                {% endif %}
-                {{ form_widget(form.weddingDate, {'attr': {'class': 'form-control'}}) }}
-            </div>
-
-            <div class="form-group">
                 {{ form_label(form.dateOfBirth) }}
                 {% if form.dateOfBirth.vars.errors|length %}
                     <div class="alert alert-danger" role="alert">
