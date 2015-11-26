@@ -1,11 +1,9 @@
 PinterestLike
 =========
 
-## Quicking Setting up
+## Setting up
 
-- (https://github.com/chiechelski/PinterestLike/wiki/Set-up)
-
-## Things to read before you write ##
+TO DO
 
 ### Coding Standards ###
 
@@ -13,13 +11,12 @@ All code is indented with four spaces, not tabs and [Symfony Coding Standards](h
 that the main advantage of standards is that every piece of code looks and feels familiar, it's not about this or that
 being more readable.
 
-#### Naming convensions:
+#### Naming conventions:
 
 * Class member variables are camel case - e.g firstName
 * Database column names use underscores - e.g first_name
   * Date time columns end with _at - e.g created_at
   * Boolean columns start with is_ - e.g is_awesome
-* Service names - shophq.bundlename.servicename - e.g shophq.core.mailer
 * Template names use camelCase - e.g firstName.html.twig
 
 ### Code Layout ###
@@ -31,11 +28,14 @@ a single feature. So, a bundle should be created for each feature.
 
 ### Testing ###
 
+TO DO
 
 ### HTML/CSS style guide ###
 
 TO DO
 
-## Wiki ##
+### _Please contribute suggestions, features, issues, and pull requests._
 
-<a href="https://github.com/chiechelski/PinterestLike/wiki">PinterestLike Wiki</a>
+## License
+
+symfony-pinterest-like-project may be freely distributed under the [MIT license](http://en.wikipedia.org/wiki/MIT_License#License_terms).
