@@ -80,6 +80,20 @@ body {
     z-index: 9999;
 }
 
+/* main container */
+
+.main-container {
+    background-color: white;
+    border-left: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+    border-right: 1px solid #DDD;
+    padding: 25px 10px;
+}
+
+.modal .modal-content  .main-container {
+    border: 0px;
+}
+
 /* icon colour */
 
 .contenthover .popover.bottom ul {
