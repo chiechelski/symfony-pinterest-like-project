@@ -110,8 +110,12 @@ body {
     padding: 30px;
 }
 
-.registration.login .btn,
-.modal .modal-content .fos_user_registration_register .btn {
+.registration.login .btn {
     width: 85%;
+    margin: 5px;
+}
+
+.modal .modal-content .fos_user_registration_register .btn {
+    width: 100%;
     margin: 5px;
 }
