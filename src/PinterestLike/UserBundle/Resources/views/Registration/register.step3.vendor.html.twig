@@ -11,32 +11,12 @@
             </div>
             <div>
                 <h4>High Quality Images</h4>
-                <ol>
-                    <li>Your image must be at least 400 x 400 pixels.</li>
-                    <li>We recommend that your image be 800 pixels wide (when expanded) with no pixelation.</li>
-                    <li>In general, vertical images (portrait) work best as they will appear larger on the screen, making your work more visible while users browse.</li>
-                </ol>
             </div>
             <div>
                 <h4>Relevant Images</h4>
-                <ol>
-                    <li>Make sure your image represents your service or product. Avoid confusing users with an image that doesn't represent your core business.</li>
-                    <li>Keep your images updated. Users will only be frustrated if something they desire is no longer available.</li>
-                </ol>
             </div>
             <div>
                 <h4>Simple Descriptions</h4>
-                <ol>
-                    <li>Add a caption or short description so users understand what is on offer. Keep it short and sweet.</li>
-                    <li>Images with prices generate 35% more likes than those without. Source: Shopify <http://www.shopify.com/infographics/pinterest></li>
-                </ol>
-            </div>
-            <div>
-                <h4>No Advertising</h4>
-                <ol>
-                    <li>Remember, this is not a classifieds section. Any image that serves as an advertisement or promotion will be removed.</li>
-                    <li>Users are very image centric and content driven. Pages with excessive ads reduce click-through rates.Source: Microsoft <http://research.microsoft.com/pubs/68148/predictingclicks.pdf></li>
-                </ol>
             </div>
         </div>
 
@@ -76,11 +56,6 @@
                         <br />
 
                         <form action="{{ path('vendor_register_step3') }}" {{ form_enctype(formImages) }} method="POST" class="fos_user_registration_register">
-                            <!-- The global progress bar -->
-                            {#<div id="progress" class="progress">
-                                <div class="progress-bar progress-bar-success"></div>
-                            </div>#}
-
                             <!-- The container for the uploaded files -->
                             <div id="files" class="files">
                                 {% for image in formImages.images %}
@@ -98,15 +73,6 @@
                                                     </div>
                                                 {% endif %}
                                                 {{ form_widget(image.category, {'attr': {'class': 'form-control', 'placeholder': 'Choose Category'}}) }}
-                                                <div class="clearfix"></div>
-                                            </div>
-                                            <div class="form-group">
-                                                {% if image.colour.vars.errors|length %}
-                                                    <div class="alert alert-danger" role="alert">
-                                                        {{ form_errors(image.colour) }}
-                                                    </div>
-                                                {% endif %}
-                                                {{ form_widget(image.colour, {'attr': {'class': 'form-control', 'placeholder': 'Choose Colour'}}) }}
                                                 <div class="clearfix"></div>
                                             </div>
                                             <div class="form-group">
@@ -175,15 +141,6 @@
                                                 <div class="clearfix"></div>
                                             </div>
                                             <div class="form-group">
-                                                {% if video.colour.vars.errors|length %}
-                                                    <div class="alert alert-danger" role="alert">
-                                                        {{ form_errors(video.colour) }}
-                                                    </div>
-                                                {% endif %}
-                                                {{ form_widget(video.colour, {'attr': {'class': 'form-control', 'placeholder': 'Choose Colour'}}) }}
-                                                <div class="clearfix"></div>
-                                            </div>
-                                            <div class="form-group">
                                                 {% if video.description.vars.errors|length %}
                                                     <div class="alert alert-danger" role="alert">
                                                         {{ form_errors(video.description) }}
@@ -228,10 +185,6 @@
             <div class="col-md-8">
                 <div class="form-group">
                     {{ form_widget(formImages.category, {'attr': {'class': 'form-control', 'placeholder': 'Choose Category'}}) }}
-                    <div class="clearfix"></div>
-                </div>
-                <div class="form-group">
-                    {{ form_widget(formImages.colour, {'attr': {'class': 'form-control', 'placeholder': 'Choose Colour'}}) }}
                     <div class="clearfix"></div>
                 </div>
                 <div class="form-group">
@@ -297,8 +250,6 @@
                     $node.find('a.remove').attr('data-image-id', data.result.imageId);
                     $node.find('#vendor_images_category').attr('name', 'vendor_images[images][' + imgCount + '][category]');
                     $node.find('#vendor_images_category').attr('required', 'required');
-                    $node.find('#vendor_images_colour').attr('name', 'vendor_images[images][' + imgCount + '][colour]');
-                    $node.find('#vendor_images_colour').attr('required', 'required');
                     $node.find('#vendor_images_description').attr('name', 'vendor_images[images][' + imgCount + '][description]');
                     $node.find('#vendor_images_description').attr('required', 'required');
                     $node.find('#vendor_images_remove').attr('name', 'vendor_images[images][' + imgCount + '][remove]');
@@ -308,8 +259,6 @@
                     // remove from hidden field
                     $node.find('#vendor_images_category').removeAttr('required');
                     $node.find('#vendor_images_category').attr('name', 'category');
-                    $node.find('#vendor_images_colour').removeAttr('required');
-                    $node.find('#vendor_images_colour').attr('name', 'colour');
                     $node.find('#vendor_images_description').removeAttr('required');
                     $node.find('#vendor_images_description').attr('name', 'description');
                     $node.find('#vendor_images_remove').attr('name', 'remove');
@@ -417,8 +366,6 @@
                     $node.find('a.remove').attr('data-image-id', data.result.video.id);
                     $node.find('#vendor_images_category').attr('name', 'vendor_videos[videos][' + videoCount + '][category]');
                     $node.find('#vendor_images_category').attr('required', 'required');
-                    $node.find('#vendor_images_colour').attr('name', 'vendor_videos[videos][' + videoCount + '][colour]');
-                    $node.find('#vendor_images_colour').attr('required', 'required');
                     $node.find('#vendor_images_description').attr('name', 'vendor_videos[videos][' + videoCount + '][description]');
                     $node.find('#vendor_images_description').attr('required', 'required').html(data.result.video.description);
                     $node.find('#vendor_images_remove').attr('name', 'vendor_videos[videos][' + videoCount + '][remove]');
@@ -428,8 +375,6 @@
                     // remove from hidden field
                     $node.find('#vendor_images_category').removeAttr('required');
                     $node.find('#vendor_images_category').attr('name', 'category');
-                    $node.find('#vendor_images_colour').removeAttr('required');
-                    $node.find('#vendor_images_colour').attr('name', 'colour');
                     $node.find('#vendor_images_description').removeAttr('required');
                     $node.find('#vendor_images_description').attr('name', 'description');
                     $node.find('#vendor_images_remove').attr('name', 'remove');

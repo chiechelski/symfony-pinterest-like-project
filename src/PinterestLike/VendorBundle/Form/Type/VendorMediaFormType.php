@@ -21,7 +21,6 @@ class VendorMediaFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $categories = $this->getCategoryOptions();
-        $colours = $this->getColourOptions();
 
         // aux values
         $builder
@@ -43,15 +42,6 @@ class VendorMediaFormType extends AbstractType
                 )
             )
             ->add(
-                'colour',
-                'choice',
-                array(
-                    'choices' => $colours,
-                    'required' => false,
-                    'mapped' => false
-                )
-            )
-            ->add(
                 'remove',
                 'hidden',
                 array(
@@ -68,11 +58,7 @@ class VendorMediaFormType extends AbstractType
                     array(
                         'type' => new VendorVideoType($this->em)
                     )
-                )
-                /*->add(
-                    'videoUrl',
-                    'text'
-                )*/;
+                );
         }
 
         if ($this->type == 'images' || $this->type == 'both') {
@@ -104,25 +90,6 @@ class VendorMediaFormType extends AbstractType
         }
 
         return $categories;
-    }
-
-    public function getColourOptions()
-    {
-        $colours = array(
-            '' => 'Choose Colour'
-        );
-
-        $repository = $this->em->getRepository('PinterestLikeVendorBundle:Colour');
-        $results = $repository->createQueryBuilder('c')
-            ->orderBy('c.name', 'ASC')
-            ->getQuery()
-            ->getResult();
-
-        foreach ($results as $result) {
-            $colours[$result->getId()] = $result->getName();
-        }
-
-        return $colours;
     }
 
     public function getName()

@@ -250,7 +250,6 @@ class RegistrationController extends Controller
 
             $loadFormAgain = $this->deleteCollections($manager, 'images', $postData['images'], $vendor);
 
-
             $manager->flush();
 
             $this->setFlash('success', 'Vendor Images has been succesfully updated');
