@@ -84,7 +84,7 @@ class VendorImage extends UploadableImage implements \JsonSerializable
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true)
      */
     protected $category;
-    
+
     /**
      * Get id
      *
@@ -278,29 +278,6 @@ class VendorImage extends UploadableImage implements \JsonSerializable
     public function getCategory()
     {
         return $this->category;
-    }
-
-    /**
-     * Set colour
-     *
-     * @param $colour
-     * @return VendorImage
-     */
-    public function setColour($colour)
-    {
-        $this->colour = $colour;
-
-        return $this;
-    }
-
-    /**
-     * Get colour
-     *
-     * @return Colour
-     */
-    public function getColour()
-    {
-        return $this->colour;
     }
 
     /**

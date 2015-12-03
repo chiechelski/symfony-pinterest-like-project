@@ -18,7 +18,6 @@ class VendorImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $categories = $this->getCategoryQB();
-        $colours = $this->getColourQB();
 
         $builder
             ->add(
@@ -39,16 +38,6 @@ class VendorImageType extends AbstractType
                 )
             )
             ->add(
-                'colour',
-                'entity',
-                array(
-                    'class' => 'PinterestLike\VendorBundle\Entity\Colour',
-                    'required' => true,
-                    'query_builder' => $colours,
-                    'empty_value' => 'Choose Colour'
-                )
-            )
-            ->add(
                 'remove',
                 'hidden',
                 array(
@@ -62,13 +51,6 @@ class VendorImageType extends AbstractType
     public function getCategoryQB()
     {
         $repository = $this->em->getRepository('PinterestLikeVendorBundle:Category');
-        return $repository->createQueryBuilder('c')
-            ->orderBy('c.name', 'ASC');
-    }
-
-    public function getColourQB()
-    {
-        $repository = $this->em->getRepository('PinterestLikeVendorBundle:Colour');
         return $repository->createQueryBuilder('c')
             ->orderBy('c.name', 'ASC');
     }

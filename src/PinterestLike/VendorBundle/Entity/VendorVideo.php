@@ -371,29 +371,6 @@ class VendorVideo extends UploadableImage implements \JsonSerializable
     }
 
     /**
-     * Set colour
-     *
-     * @param $colour
-     * @return VendorVideo
-     */
-    public function setColour($colour)
-    {
-        $this->colour = $colour;
-
-        return $this;
-    }
-
-    /**
-     * Get colour
-     *
-     * @return Colour
-     */
-    public function getColour()
-    {
-        return $this->colour;
-    }
-
-    /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */

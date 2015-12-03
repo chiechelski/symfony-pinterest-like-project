@@ -45,4 +45,26 @@ class DefaultController extends Controller
                 )
             );
     }
+
+    /**
+     * TODO: Change ID to slug
+     *
+     * @Route("/vendor/{vendor}/profile", name="vendor_profile")
+     */
+    public function vendorProfileAction(Vendor $vendor)
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $imageRepository = $manager->getRepository('TheWedlyVendorBundle:VendorImage');
+        $allMedia = $imageRepository->getAllMedia($vendor->getId());
+
+        return $this->container->get('templating')->renderResponse(
+            'TheWedlyVendorBundle:Default:vendor.profile.html.twig',
+            array(
+                'vendor'   => $vendor,
+                'allMedia' => $allMedia
+            )
+        );
+    }
 }
