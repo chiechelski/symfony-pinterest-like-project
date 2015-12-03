@@ -94,6 +94,43 @@ body {
     border: 0px;
 }
 
+/* dropzone */
+
+#dropzone {
+    cursor: pointer;
+    background: #18bc9c;
+    width: 250px;
+    height: 150px;
+    line-height: 50px;
+    text-align: center;
+    font-weight: bold;
+    color: #FFF;
+    width: 100%;
+    border-style: dashed;
+}
+#dropzone.in {
+    width: 600px;
+    height: 200px;
+    max-width: 100%;
+    line-height: 200px;
+    font-size: larger;
+}
+#dropzone.hover {
+    background: #35cccc;
+}
+#dropzone.fade {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    opacity: 1;
+}
+
+/* Pinteres like grid  */
+
+*, *:before, *:after {box-sizing:  border-box !important;}
+
 /* icon colour */
 
 .contenthover .popover.bottom ul {
