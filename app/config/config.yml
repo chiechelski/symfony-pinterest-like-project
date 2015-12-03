@@ -47,6 +47,15 @@ assetic:
     assets:
         jquery_file_upload:
             inputs:
+                - '@PinterestLikeStaticBundle/Resources/public/js/jquery-file-upload/vendor/jquery.ui.widget.js'
+                - '@PinterestLikeStaticBundle/Resources/public/js/jquery-file-upload/load-image.all.min.js'
+                - '@PinterestLikeStaticBundle/Resources/public/js/jquery-file-upload/canvas-to-blob.min.js'
+                - '@PinterestLikeStaticBundle/Resources/public/js/jquery-file-upload/jquery.iframe-transport.js'
+                - '@PinterestLikeStaticBundle/Resources/public/js/jquery-file-upload/jquery.fileupload.js'
+                - '@PinterestLikeStaticBundle/Resources/public/js/jquery-file-upload/jquery.fileupload-process.js'
+                - '@PinterestLikeStaticBundle/Resources/public/js/jquery-file-upload/jquery.fileupload-image.js'
+                - '@PinterestLikeStaticBundle/Resources/public/js/jquery-file-upload/jquery.fileupload-video.js'
+                - '@PinterestLikeStaticBundle/Resources/public/js/jquery-file-upload/jquery.fileupload-validate.js'
 
 # Doctrine Configuration
 doctrine:
