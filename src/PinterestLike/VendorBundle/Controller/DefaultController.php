@@ -47,6 +47,37 @@ class DefaultController extends Controller
     }
 
     /**
+     * Vendor Settings
+     *
+     * @Route("/vendor/settings", name="vendor_settings")
+     */
+    public function vendorSettingsAction(Request $request)
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $vendor = $user->getVendor();
+
+        $form = $this->createForm(
+            new VendorStep2RegistrationFormType(),
+            $vendor
+        );
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $manager->persist($form->getData());
+            $manager->flush();
+        }
+
+        return $this->container->get('templating')->renderResponse(
+            'TheWedlyVendorBundle:Default:vendor.settings.html.twig',
+            array(
+                'form' => $form->createView(),
+                'vendor'   => $vendor
+            )
+        );
+    }
+
+    /**
      * TODO: Change ID to slug
      *
      * @Route("/vendor/{vendor}/profile", name="vendor_profile")

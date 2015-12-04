@@ -75,10 +75,24 @@ This is a generic HTML5 wrapper that should be suitable for any web page to exte
 
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                 {% if app.user.isVendor %}
-                                    <li>
-                                        <a href="#">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                                             Hi {{ app.user.vendor.name | capitalize }} <span class="caret"></span>
                                         </a>
+                                        <ul class="dropdown-menu dropdown-menu-left" role="menu" aria-labelledby="dropdownMenu1">
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="-1" href="{{ path('vendor_profile', {'vendor': app.user.vendor.id}) }}">Your Profile</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="-1" href="{{ path('vendor_settings') }}">Settings</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="-1" href="{{ path('vendor_upload_media') }}">Upload Media</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="-1" href="{{ path('fos_user_security_logout') }}">Logout</a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 {% elseif app.user.firstName %}
                                     <li>
