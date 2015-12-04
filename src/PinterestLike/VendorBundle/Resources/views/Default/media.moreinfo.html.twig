@@ -6,84 +6,67 @@
         <div class="col-sm-3 col-xs-12">
             <div class="col-md-12" id="vendor-details">
                 <ul class="list-group form-horizontal no-border-radius">
-                  <li class="list-group-item no-border-radius">{{ vendor.getName }}</li>
-                  <li class="list-group-item">
-                      <div class="form-group">
-                        <div class="col-xs-2">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        </div>
-                        <div class="col-xs-10">{{ vendor.getContactPerson }}</div>
-                      </div>
-                  </li>
-                  {% if vendor.getPhone %}
+                    <li class="list-group-item no-border-radius">{{ vendor.getName }}</li>
                     <li class="list-group-item">
                         <div class="form-group">
-                          <div class="col-xs-2">
-                          <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
-                          </div>
-                          <div class="col-xs-10">{{ vendor.getPhone }}</div>
+                            <div class="col-xs-2">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-xs-10">{{ vendor.getContactPerson }}</div>
                         </div>
                     </li>
-                  {% endif %}
-                  {% if vendor.getMobile %}
+                    {% if vendor.getPhone %}
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-xs-2">
+                                <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                                </div>
+                                <div class="col-xs-10">{{ vendor.getPhone }}</div>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if vendor.getMobile %}
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-xs-2">
+                                    <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                                </div>
+                                <div class="col-xs-10">{{ vendor.getMobile }}</div>
+                            </div>
+                        </li>
+                    {% endif %}
                     <li class="list-group-item">
                         <div class="form-group">
-                          <div class="col-xs-2">
-                          <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
-                          </div>
-                          <div class="col-xs-10">{{ vendor.getMobile }}</div>
+                            <div class="col-xs-2">
+                            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-xs-10">
+                                {{ vendor.getAddress }}<br>
+                                {% if vendor.getPostcode %}
+                                    {{ vendor.getPostcode }}<br>
+                                {% endif %}
+                                {{ vendor.getCountry }}
+                            </div>
                         </div>
                     </li>
-                  {% endif %}
-                  <li class="list-group-item">
-                      <div class="form-group">
-                        <div class="col-xs-2">
-                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                    <li class="list-group-item">
+                        <div class="form-group">
+                            <div class="col-xs-2">
+                                <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-xs-10">
+                                {{ vendor.getWebsite }}
+                            </div>
                         </div>
-                        <div class="col-xs-10">
-                            {{ vendor.getAddress }}<br>
-                            {% if vendor.getPostcode %}
-                                {{ vendor.getPostcode }}<br>
-                            {% endif %}
-                            {{ vendor.getCountry }}</div>
-                      </div>
-                  </li>
-                  {#
-                  <li class="list-group-item">
-                      <div class="form-group">
-                        <div class="col-xs-2">
-                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="form-group">
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-10">
+                                <a class="btn btn-xs btn-info" href="{{ path('vendor_profile', {'vendor': vendor.Id }) }}" role="button">VIEW FULL PROFILE</a>
+                            </div>
                         </div>
-                        <div class="col-xs-10">
-                            Mon 9:00am - 9:00pm<br>
-                            Tue 9:00am - 9:00pm<br>
-                            Wed 9:00am - 9:00pm<br>
-                            Thu 9:00am - 9:00pm<br>
-                            Fri 9:00am - 9:00pm<br>
-                            Sat 9:00am - 9:00pm<br>
-                            Sun 9:00am - 9:00pm
-                        </div>
-                      </div>
-                  </li>
-                  #}
-                  <li class="list-group-item">
-                      <div class="form-group">
-                        <div class="col-xs-2">
-                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-                        </div>
-                        <div class="col-xs-10">
-                            {{ vendor.getWebsite }}
-                        </div>
-                      </div>
-                  </li>
-                  <li class="list-group-item">
-                      <div class="form-group">
-                        <div class="col-xs-2"></div>
-                        <div class="col-xs-10">
-                            <a class="btn btn-xs btn-info" href="{{ path('vendor_profile', {'vendor': vendor.Id }) }}" role="button">VIEW FULL PROFILE</a>
-                        </div>
-                      </div>
-                  </li>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -103,11 +86,6 @@
                             <li>
                                 <a href="http://www.tumblr.com/share/link?url=" class="js-social-share"><span class="el el-tumblr el-lg theme-colour"></span>&nbsp; Tumblr</a>
                             </li>
-                            {#
-                            <li>
-                                <a href="email" class="js-social-share"><span class="el el-envelope el-lg theme-colour"></span>&nbsp; Email</a>
-                            </li>
-                            #}
                         </ul>
                     </div>
                     <span class="pull-right white-text">

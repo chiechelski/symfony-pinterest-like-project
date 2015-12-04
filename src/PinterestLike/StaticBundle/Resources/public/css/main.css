@@ -90,6 +90,10 @@ body {
     padding: 25px 10px;
 }
 
+.main-container.border-top {
+    border-top: 1px solid #DDD;
+}
+
 .modal .modal-content  .main-container {
     border: 0px;
 }

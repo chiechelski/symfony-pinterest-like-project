@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block header %}
+    {% set headerVersion = 'large' %}
+    {{ parent() }}
+{% endblock header %}
+
 {% block body %}
 
     <div class="text-center loading-img">
@@ -14,7 +19,7 @@
         {% endfor %}
     </div>
 
-{% endblock %}
+{% endblock body %}
 
 {% block javascriptsBottom %}
 

@@ -1,19 +1,17 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{% block header %}
+    {% set pageTitle = 'VENDOR SETTINGS' %}
+    {{ parent() }}
+{% endblock header %}
+
 {% block body %}
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="text-center head-color">
-                <h1>VENDOR SETTINGS</h1>
-                <hr>
-            </div>
-        </div>
-
         <div class="col-sm-8 col-sm-offset-2 col-xs-12 no-right-padding white-body">
             <div class="col-xs-12" id="vendor-settings">
                 <form action="{{ path('vendor_settings') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
-                    <div class="main-container registration-container">
+                    <div class="main-container registration-container border-top">
                         <div class="col-md-10 col-md-offset-1">
 
                             {% if form.vars['errors'] is not empty %}

@@ -69,7 +69,7 @@ class DefaultController extends Controller
         }
 
         return $this->container->get('templating')->renderResponse(
-            'TheWedlyVendorBundle:Default:vendor.settings.html.twig',
+            'PinterestLikeVendorBundle:Default:vendor.settings.html.twig',
             array(
                 'form' => $form->createView(),
                 'vendor'   => $vendor
@@ -87,11 +87,11 @@ class DefaultController extends Controller
         $manager = $this->getDoctrine()->getManager();
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $imageRepository = $manager->getRepository('TheWedlyVendorBundle:VendorImage');
+        $imageRepository = $manager->getRepository('PinterestLikeVendorBundle:VendorImage');
         $allMedia = $imageRepository->getAllMedia($vendor->getId());
 
         return $this->container->get('templating')->renderResponse(
-            'TheWedlyVendorBundle:Default:vendor.profile.html.twig',
+            'PinterestLikeVendorBundle:Default:vendor.profile.html.twig',
             array(
                 'vendor'   => $vendor,
                 'allMedia' => $allMedia

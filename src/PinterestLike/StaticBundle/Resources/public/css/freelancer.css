@@ -90,6 +90,15 @@ header .container {
     padding-bottom: 50px;
 }
 
+header .container.header-version-small {
+    padding-top: 110px;
+    padding-bottom: 10px;
+}
+
+header .container.header-version-small .intro-text .name {
+    font-size: 1.75em;
+}
+
 header img {
     display: block;
     margin: 0 auto 20px;
