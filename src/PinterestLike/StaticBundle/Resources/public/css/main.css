@@ -80,6 +80,12 @@ body {
     z-index: 9999;
 }
 
+/* cards */
+
+#cards {
+    position: relative;
+}
+
 /* main container */
 
 .main-container {

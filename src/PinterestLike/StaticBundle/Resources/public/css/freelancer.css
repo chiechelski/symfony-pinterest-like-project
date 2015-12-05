@@ -91,7 +91,7 @@ header .container {
 }
 
 header .container.header-version-small {
-    padding-top: 110px;
+    padding-top: 105px;
     padding-bottom: 10px;
 }
 
@@ -180,7 +180,7 @@ header .intro-text .skills {
 }
 
 section {
-    padding: 100px 0;
+    padding: 50px 0;
 }
 
 section h2 {

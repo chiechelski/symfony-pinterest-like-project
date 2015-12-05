@@ -1,5 +1,10 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{% block header %}
+    {% set pageTitle = 'UPLOAD MEDIA' %}
+    {{ parent() }}
+{% endblock header %}
+
 {% block fos_user_content %}
     <div class="vendor-upload-images">
         <div class="col-md-12">
