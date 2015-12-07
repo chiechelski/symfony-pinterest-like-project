@@ -90,10 +90,18 @@ This is a generic HTML5 wrapper that should be suitable for any web page to exte
                                         </ul>
                                     </li>
                                 {% elseif app.user.firstName %}
-                                    <li>
-                                        <a href="#">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                                             Hi {{ app.user.firstName | capitalize }},
                                         </a>
+                                        <ul class="dropdown-menu dropdown-menu-left" role="menu" aria-labelledby="dropdownMenu1">
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="-1" href="{{ path('user_settings') }}">Settings</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="-1" href="{{ path('fos_user_security_logout') }}">Logout</a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 {% endif %}
                                 <li>
