@@ -156,19 +156,6 @@ class RegistrationController extends Controller
 
                 $postData = $this->getRequest()->request->get('user');
 
-                if ($form->get('weddingDate')->getData()) {
-                    if ($user->getWedding()) {
-                        $wedding = $user->getWedding();
-                    }
-                    else {
-                        $wedding = new Wedding();
-                    }
-
-                    $wedding->setWeddingDate($form->get('weddingDate')->getData());
-
-                    $user->setWedding($wedding);
-                }
-
                 $manager->persist($form->getData());
                 $manager->flush();
 
