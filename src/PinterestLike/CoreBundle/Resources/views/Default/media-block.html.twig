@@ -1,5 +1,4 @@
 <div class="{{ size == 5 ? 'col-md-5ths' : 'col-md-4'  }} col-sm-4 col-xs-6 vendor-media" id="media-item-{{ media['type'] }}-{{ media['id'] }}">
-
     <div class="contents-block">
 
         <div class="thumbnails">
@@ -13,10 +12,13 @@
 
             <div class='contenthover media-item' data-media-type='{{ media['type'] }}' data-media-id='{{ media['id'] }}'>
                 <div class="text-center">
+                    {% if app.user and not app.user.isVendor() %}
+                        <a href="#" data class="btn btn-default btn-xs pink-text add-to-album"><span class="glyphicon glyphicon-plus"></span></a>
+                    {% endif %}
                     <a href="" class="btn btn-default btn-xs pink-text not-link pop">SHARE</a>
 
                     <div class="content hide">
-                        <ul class="list-unstyled">
+                        <ul class="list-unstyled" data-url="{{ url('vendor_media_moreinfo', {'type': media['type'], 'id': media['id']}) }}">
                             <li>
                                 <a href="https://www.facebook.com/sharer/sharer.php?u=" class="js-social-share"><span class="el el-facebook el-lg theme-colour"></span>&nbsp; Facebook</a>
                             </li>
@@ -35,13 +37,11 @@
 
         <div class="vendor-info">
             <p class="text-center">
-                <a href="#">
+                <a href="{{ path('vendor_profile', {'vendor': media['vendor_id']}) }}">
                     {{ media['vendor_name'] }}
                 </a>
                 <br />
-                {% if media['category'] is defined %}
-                    <span class="text-muted">{{ media['category_name'] | capitalize }} </span>
-                {% endif %}
+                <span class="text-muted">{{ media['category_name'] | capitalize }}</span>
             </p>
         </div>
 

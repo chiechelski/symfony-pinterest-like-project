@@ -35,7 +35,7 @@ class VendorImageRepository extends EntityRepository
         $stmt = $connection->prepare("
             SELECT *
             FROM (
-                SELECT vi.id, 'image' type, '' as video_type, '' as video_id, v.id vendor_id,  v.name vendor_name , vi.image_path, vi.description, vi.created_at
+                SELECT vi.id, 'image' type, '' as video_type, '' as video_id, v.id vendor_id,  v.name vendor_name , vi.image_path, vi.description, vi.created_at, c.name category_name
                 FROM vendor v
                 INNER JOIN vendor_image vi
                     ON v.id = vi.vendor_id
@@ -44,7 +44,7 @@ class VendorImageRepository extends EntityRepository
 
                 UNION
 
-                SELECT vv.id, 'video' type, vv.video_type, vv.video_id, v.id vendor_id, v.name vendor_name, vv.image_path, vv.description, vv.created_at
+                SELECT vv.id, 'video' type, vv.video_type, vv.video_id, v.id vendor_id, v.name vendor_name, vv.image_path, vv.description, vv.created_at, c.name category_name
                 FROM vendor v
                 INNER JOIN vendor_video vv
                     ON v.id = vv.vendor_id
