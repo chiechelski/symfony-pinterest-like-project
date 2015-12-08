@@ -73,9 +73,26 @@ body {
     transition: opacity 500ms;
 }
 
+.contenthover {
+    cursor: pointer;
+}
+
+.media-item .text-center {
+    padding-top: 10px;
+    z-index: 10;
+}
+
+.media-item .wrapper {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
 .thumbnails:hover .contenthover {
     opacity: 1;
 }
+
 .contenthover .popover {
     z-index: 9999;
 }

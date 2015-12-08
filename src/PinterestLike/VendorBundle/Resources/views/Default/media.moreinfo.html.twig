@@ -109,23 +109,6 @@
             </div>
         </div>
         <div class="col-sm-3 col-xs-12 margin-top35 vendor-panel">
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <div class="col-md-12 padding-10">
-                    <form>
-                        <p class="text-center">
-                            ASK VENDOR A QUESTION
-                        </p>
-                        <div class="form-group">
-                            <textarea class="form-control" rows="5"></textarea>
-                        </div>
-                        <div class="line">
-                            <button type="button" id="ask-question" class="btn btn-info btn-xs pull-right">SEND</button>
-                            <div class="clearfix"></div>
-                        </div>
-                    </form>
-                </div>
-            {% endif %}
-
             {% if vendor.getImages.count > 0 %}
                 <div class="col-md-12 padding-10 vendor-others">
                     <p class="text-center">
@@ -138,6 +121,7 @@
                     </div>
                 </div>
             {% endif %}
+
             {% if vendor.getVideos.count > 0 %}
                 <div class="col-md-12 padding-10 vendor-others">
                     <p class="text-center">
@@ -170,22 +154,6 @@
                 e.preventDefault();
                 var $parent = $(this).parent();
                 openSavePopup($parent.data('media-type'), this, $parent.data('media-id'));
-            });
-
-            $('#ask-question').click(function() {
-                var $form = $(this).closest('form');
-                if ($form.find('textarea').val().length > 0) {
-                    $('#ask-question').html('Sending...').attr('disabled', 'disabled');
-
-                    $.ajax({
-                        method: "POST",
-                        url: "{{ path('vendor_question', { vendor: vendor.id }) }}",
-                        data: { question: $form.find('textarea').val() }
-                    }).done(function(data) {
-                        $form.find('textarea').parent().html('<div class="alert alert-success" role="alert">You have succesfully asked a question to this vendor.</div>');
-                        $('#ask-question').html('Sent').attr('disabled', '');;
-                    });
-                }
             });
 
             $('.pop').popover({
