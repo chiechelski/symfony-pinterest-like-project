@@ -3,6 +3,9 @@
 
         $('.media-item .wrapper').click(function() {
             var $parent = $(this).parent();
+
+            console.log('wrapper---->');
+
             openPopup($parent.data('media-type'), this, $parent.data('media-id'));
         });
 
