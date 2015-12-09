@@ -197,3 +197,65 @@ body {
     width: 100%;
     margin: 5px;
 }
+
+/* modal overlay background */
+.modal-backdrop {
+   background-color: #fff;
+   opacity: 0.5;
+}
+
+/* vendor popup */
+
+.modal-vendor-more-info .modal-content {
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: none;
+}
+
+.modal-vendor-more-info .modal-content .row > div > div {
+    background-color: #fff;
+    padding: 0
+}
+
+.modal-vendor-more-info #vendor-details .list-group {
+    margin: 0
+}
+
+.no-border-radius {
+    border-radius: 0 !important
+}
+
+.modal-vendor-more-info #vendor-details .form-group {
+    margin-bottom: 0
+}
+
+.modal-vendor-more-info .modal-content .vendor-panel {
+    background-color: transparent;
+}
+
+.modal-vendor-more-info .modal-content .vendor-others {
+    border: 1px solid #FCFCFC;
+    padding: 15px;
+}
+
+.modal-vendor-more-info .modal-content .vendor-others img {
+    width: 32%;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+/* modal width */
+.modal-vendor-more-info.modal .modal-dialog {
+    width: 80%;
+}
+
+.modal-vendor-more-info .modal-content {
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: none;
+}
