@@ -247,6 +247,10 @@ body {
     cursor: pointer;
 }
 
+.modal-vendor-more-info .modal-content .light-border {
+    border: 1px solid #F0F0F0;
+}
+
 /* modal width */
 .modal-vendor-more-info.modal .modal-dialog {
     width: 80%;
