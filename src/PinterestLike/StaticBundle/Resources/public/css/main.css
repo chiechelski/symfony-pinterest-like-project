@@ -251,6 +251,10 @@ body {
     border: 1px solid #F0F0F0;
 }
 
+.modal-vendor-more-info .modal-content .light-border li {
+    padding: 10px 15px;
+}
+
 /* modal width */
 .modal-vendor-more-info.modal .modal-dialog {
     width: 80%;
@@ -262,4 +266,10 @@ body {
     -moz-box-shadow: none;
     box-shadow: none;
     border: none;
+}
+
+/* isotope elements - TODO change */
+
+#cards {
+    visibility: hidden;
 }
